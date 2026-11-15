@@ -1,0 +1,951 @@
+{
+  "packs": [
+    {
+      "id": "mitos-y-leyendas",
+      "title": "Mitos, Leyendas y Trampas",
+      "description": "Creencias populares, leyendas urbanas y sorpresas de cultura general",
+      "questions": [
+        {
+          "id": "q-001",
+          "type": "single_choice",
+          "category": "Naturaleza y Mitos",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "Los lemmings son pequeños roedores árticos famosos por una supuesta costumbre macabra. ¿Cuál de estas afirmaciones es cierta?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Disney creó un falso documental que contribuyó a extender el mito de que los lemmings se suicidan en masa." },
+            { "id": "b", "text": "Cuando su población supera la capacidad del entorno para alimentarlos, se lanzan voluntariamente por acantilados hacia el mar." },
+            { "id": "c", "text": "Los lemmings no existen realmente: son animales ficticios popularizados por un famoso videojuego de los años noventa." }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "Los lemmings no se suicidan en masa. Su mala fama se popularizó con el documental de Disney 'White Wilderness' (1958), donde los animales fueron trasladados hasta Alberta (Canadá), colocados en una plataforma giratoria y empujados por un acantilado para simular una migración suicida.",
+          "extraFact": "El famoso videojuego Lemmings (1991) aprovechó precisamente esa falsa imagen popular. A veces la realidad no es tan absurda como parece: basta con que alguien la filme y le ponga música dramática."
+        },
+        {
+          "id": "q-002",
+          "type": "single_choice",
+          "category": "Lenguaje y Psicología",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "Existen palabras que parecen sacadas de un libro de hechizos, como «pareidolia». ¿Qué significa realmente?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Un trastorno psicológico que provoca alucinaciones visuales." },
+            { "id": "b", "text": "Un fenómeno por el que nuestro cerebro reconoce caras o formas familiares en objetos y estímulos aleatorios." },
+            { "id": "c", "text": "El término médico para describir a una persona excesivamente desconfiada y paranoica." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "La pareidolia es el fenómeno psicológico por el que nuestro cerebro interpreta estímulos ambiguos como imágenes reconocibles, especialmente rostros humanos: caras en nubes, enchufes enfadados o manchas en la pared.",
+          "extraFact": "Uno de los casos más famosos relacionados con este fenómeno en España son las caras de Bélmez (Jaén, 1971)."
+        },
+        {
+          "id": "q-003",
+          "type": "single_choice",
+          "category": "Ciencia y Salud",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "Algunas palabras médicas parecen inventadas por alguien con mucho sentido del humor, como «diverticulitis». ¿Qué significa realmente?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Una dolencia que provoca dolor abdominal al esforzarse demasiado riéndose a carcajadas." },
+            { "id": "b", "text": "Una palabra que popularizaron los Payasos de la Tele, especialmente Miliki, para referirse a los ataques de risa." },
+            { "id": "c", "text": "Una enfermedad que consiste en la inflamación o infección de pequeños sacos en las paredes del intestino grueso." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "Los divertículos son pequeñas bolsas que pueden formarse en la pared del colon (diverticulosis). Cuando uno o varios se inflaman o infectan aparece la diverticulitis, que puede provocar dolor abdominal intenso y fiebre.",
+          "extraFact": "No confundas diverticulosis (tener los sacos, a menudo sin síntomas) con diverticulitis (cuando se inflaman). ¡Con esta palabra mejor no hacer chistes!"
+        },
+        {
+          "id": "q-004",
+          "type": "single_choice",
+          "category": "Leyendas Urbanas",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué ocurre realmente si dejamos un diente dentro de un vaso de Coca-Cola durante toda una noche?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Se disuelve por completo, porque la bebida destruye el esmalte dental en horas." },
+            { "id": "b", "text": "Se oscurece y puede sufrir cierta erosión superficial, pero no desaparece." },
+            { "id": "c", "text": "Se convierte en una especie de goma blanda que se puede doblar." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "La acidez de los refrescos favorece la erosión dental a largo plazo, pero el esmalte es un tejido muy resistente y un diente no se disuelve en una noche.",
+          "extraFact": "El ácido de los refrescos puede desgastar el esmalte incluso en versiones sin azúcar: ¡el problema no es solo lo dulce!"
+        },
+        {
+          "id": "q-005",
+          "type": "single_choice",
+          "category": "Leyendas Urbanas",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Es verdad que si te tragas un chicle se queda pegado en el estómago durante siete años?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Sí, porque el organismo no puede digerirlo y permanece adherido al estómago durante años." },
+            { "id": "b", "text": "No, normalmente atraviesa el aparato digestivo y acaba expulsándose." },
+            { "id": "c", "text": "Sí, pero únicamente si te tragas más de tres chicles a la semana." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Aunque nuestro cuerpo no digiere completamente la base gomosa del chicle, no se queda pegada al estómago: sigue su recorrido por el intestino y se elimina con normalidad.",
+          "extraFact": "El aparato digestivo transporta y expulsa muchos materiales indigeribles, aunque tragar chicles en grandes cantidades sigue siendo mala idea."
+        },
+        {
+          "id": "q-006",
+          "type": "single_choice",
+          "category": "Leyendas Urbanas",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Es cierto que calentar comida en el microondas destruye sus nutrientes y la vuelve radiactiva?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Sí, porque las ondas alteran químicamente los alimentos." },
+            { "id": "b", "text": "No, no los vuelve radiactivos y puede conservar nutrientes igual o mejor que otros métodos." },
+            { "id": "c", "text": "Sí, pero únicamente cuando utilizamos recipientes de plástico." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "El microondas usa radiación no ionizante para hacer vibrar moléculas de agua y calentar la comida. Al requerir menos tiempo y menos agua, suele conservar muy bien los nutrientes.",
+          "extraFact": "La radiación de un microondas no tiene nada que ver con los rayos X ni con materiales radiactivos. ¡No te estás comiendo una patata nuclear!"
+        },
+        {
+          "id": "q-007",
+          "type": "single_choice",
+          "category": "Marcas y Secretos",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Cuál de estas afirmaciones sobre la famosa fórmula secreta de Coca-Cola es VERDADERA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Solo dos directivos conocen la receta completa y tienen prohibido viajar juntos en el mismo avión." },
+            { "id": "b", "text": "La fórmula estuvo guardada décadas en una caja fuerte bancaria y desde 2011 se conserva en una bóveda del museo World of Coca-Cola en Atlanta." },
+            { "id": "c", "text": "La receta fue publicada íntegramente en un periódico en 1979, pero la compañía impidió que nadie la copiara." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "En 1925 la fórmula escrita se guardó en una caja de seguridad bancaria en Atlanta y en diciembre de 2011 fue trasladada al museo World of Coca-Cola. La norma de que solo dos directivos la conocen y no vuelan juntos es una leyenda sin pruebas.",
+          "extraFact": "Coca-Cola protege su receta como secreto comercial en lugar de patentarla, porque una patente obligaría a hacer pública la fórmula."
+        },
+        {
+          "id": "q-008",
+          "type": "single_choice",
+          "category": "Marcas y Secretos",
+          "difficulty": "hard",
+          "timeLimit": 30,
+          "prompt": "¿Cuál de estas historias sobre la rivalidad entre Coca-Cola y Pepsi es FALSA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "En 1985 Coca-Cola cambió su fórmula por la New Coke, pero las protestas obligaron a recuperar la original." },
+            { "id": "b", "text": "Pepsi organizó en 1975 el Pepsi Challenge, una prueba a ciegas comparando ambas bebidas." },
+            { "id": "c", "text": "La botella clásica de Coca-Cola se diseñó inspirándose en una vaina de cacao." },
+            { "id": "d", "text": "Coca-Cola inventó a Papá Noel vestido de rojo; antes siempre se le representaba vestido de verde." },
+            { "id": "e", "text": "En 1989 Pepsi obtuvo barcos soviéticos en un acuerdo comercial, dando pie al mito de su flota naval." }
+          ],
+          "correctOptionIds": ["d"],
+          "explanation": "Papá Noel ya vestía de rojo mucho antes de que Coca-Cola lo usara en sus anuncios. Sus campañas navideñas desde 1931 (ilustradas por Haddon Sundblom) popularizaron su imagen moderna, pero no inventaron el color rojo de su traje.",
+          "extraFact": "Todas las demás historias tienen base real: incluida la famosa operación comercial de Pepsi con la URSS en 1989 que incluía buques para desguace."
+        },
+        {
+          "id": "q-009",
+          "type": "single_choice",
+          "category": "Marcas y Secretos",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué ingredientes formaban parte de la receta original de la Coca-Cola creada en 1886?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Únicamente agua con gas, azúcar y zumo de limón." },
+            { "id": "b", "text": "Extracto de hoja de coca y nuez de cola, además de otros aromas." },
+            { "id": "c", "text": "Extracto de café, vainilla y chocolate, sin ningún ingrediente procedente de plantas." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "John Stith Pemberton creó la bebida en 1886 usando extracto de hoja de coca (que entonces contenía cocaína) y nuez de cola (rica en cafeína). De ahí surgió el nombre «Coca-Cola». A principios del siglo XX se eliminó la cocaína.",
+          "extraFact": "Posteriormente se ha seguido utilizando extracto de hojas de coca descocainizadas para aportar parte del sabor característico."
+        }
+      ]
+    },
+    {
+      "id": "cine-tv-animacion",
+      "title": "Cine, Series y Animación",
+      "description": "Secretos de rodaje, errores famosos y curiosidades de la cultura pop",
+      "questions": [
+        {
+          "id": "q-010",
+          "type": "single_choice",
+          "category": "Cine",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "En la película Bitelchús (Beetlejuice), ¿cómo se escribe realmente el nombre original del personaje?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Beetlejuice." },
+            { "id": "b", "text": "Beetlechus." },
+            { "id": "c", "text": "Betelgeuse." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "Aunque la película se titula Beetlejuice (adaptación fonética más fácil de leer), el nombre original del fantasma se escribe Betelgeuse, igual que la famosa estrella supergigante roja de la constelación de Orión.",
+          "extraFact": "Si Betelgeuse ocupara el lugar del Sol, su superficie llegaría aproximadamente hasta la órbita de Júpiter."
+        },
+        {
+          "id": "q-011",
+          "type": "single_choice",
+          "category": "Televisión y Animación",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Cómo termina realmente la mítica serie de dibujos animados «Dragones y Mazmorras» de los años 80?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Superan la última prueba, el Amo del Calabozo les da las llaves y vuelven a casa conservando sus poderes." },
+            { "id": "b", "text": "Descubren que murieron en la montaña rusa y están en el purgatorio, un final censurado en España." },
+            { "id": "c", "text": "Nunca llegan a regresar a casa porque la serie fue cancelada antes de producirse su capítulo final." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "Tras 27 episodios (1983-1985), la serie fue cancelada sin final emitido. Existía un guion escrito por Michael Reaves llamado 'Requiem' (donde se revelaba que Venger era hijo del Amo del Calabozo), pero nunca se animó para TV.",
+          "extraFact": "La teoría de que estaban muertos es una leyenda urbana sin base oficial. Muchos espectadores aseguran recordar un episodio final que jamás existió."
+        },
+        {
+          "id": "q-012",
+          "type": "single_choice",
+          "category": "Juguetes y Animación",
+          "difficulty": "hard",
+          "timeLimit": 30,
+          "prompt": "¿Cuál de estas tres afirmaciones sobre el origen de He-Man es FALSA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Al cancelar los juguetes de Conan el Bárbaro por su violencia, Mattel recicló al personaje poniéndole peluca rubia y llamándolo He-Man." },
+            { "id": "b", "text": "Mattel rechazó en 1976 fabricar los juguetes de Star Wars, lo que la llevó a buscar su propia franquicia de fantasía." },
+            { "id": "c", "text": "Battle Cat reutilizó el molde de un tigre de la antigua línea Big Jim, pintado de verde con rayas amarillas." }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "Mattel sí canceló la licencia de Conan el Bárbaro por la violencia de la película, pero He-Man ya estaba en desarrollo previo como personaje independiente diseñado por Roger Sweet, inspirado en la fantasía heroica.",
+          "extraFact": "Battle Cat realmente recicló el molde del tigre de Big Jim (1976) y cuando no está transformado se llama Cringer, un gato cobardica."
+        },
+        {
+          "id": "q-013",
+          "type": "single_choice",
+          "category": "Cómics y Animación",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Cuál de estas afirmaciones sobre el origen de Pitufina en Los Pitufos es FALSA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Gargamel la creó con arcilla y magia para sembrar discordia y envidias en la aldea." },
+            { "id": "b", "text": "Originalmente tenía el pelo corto y negro y era maliciosa, hasta que Papá Pitufo la transformó con una «pitufo-plastia»." },
+            { "id": "c", "text": "Fue un accidente cuando Azrael tiró pétalos de flores a la olla mientras Gargamel cocinaba un pitufo." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "En el cómic original de Peyo (1966), Gargamel fabricó deliberadamente a Pitufina con arcilla y magia negra para destruir la armonía de la aldea. Era morena y maliciosa hasta que Papá Pitufo realizó la llamada 'plastic smurfery' (pitufo-plastia).",
+          "extraFact": "En 1991 la escritora Katha Pollitt acuñó el término 'Principio de Pitufina' para describir obras con un grupo masculino y una única mujer."
+        },
+        {
+          "id": "q-014",
+          "type": "single_choice",
+          "category": "Televisión y Animación",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Por qué los personajes de Los Simpson tienen la piel de color amarillo?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Porque Springfield está junto a una central nuclear y sus habitantes sufrieron mutaciones." },
+            { "id": "b", "text": "Porque una animadora propuso ese color y Groening vio que al hacer zapping un destello amarillo haría reconocible la serie al instante." },
+            { "id": "c", "text": "Porque Matt Groening quería representar a una familia de extraterrestres infiltrados en EE. UU." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "La animadora Georgie Peluse propuso el color amarillo y Matt Groening lo aprobó como estrategia visual: quería que cualquiera que cambiara de canal rápidamente reconociera la serie por ese destello amarillo.",
+          "extraFact": "Además, todos los personajes tienen cuatro dedos por mano para ahorrar trabajo de animación... salvo Dios y Jesucristo, que aparecen con cinco."
+        },
+        {
+          "id": "q-015",
+          "type": "single_choice",
+          "category": "Animación",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Cuál de estas afirmaciones sobre Bob Esponja es FALSA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Está inspirado en una esponja marina natural, aunque con forma cuadrada para hacerlo más reconocible." },
+            { "id": "b", "text": "Su creador, Stephen Hillenburg, era biólogo marino y profesor de ciencias marinas." },
+            { "id": "c", "text": "Bob Esponja y Patricio fueron concebidos oficialmente como pareja sentimental por su creador." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "Stephen Hillenburg, biólogo marino de formación, aclaró en 2005 que nunca concibió a Bob Esponja y Patricio como una pareja romántica y que consideraba a los personajes «casi asexuales».",
+          "extraFact": "Bob Esponja nació originalmente en un cómic educativo llamado 'The Intertidal Zone' que Hillenburg usaba para enseñar biología marina."
+        },
+        {
+          "id": "q-016",
+          "type": "single_choice",
+          "category": "Animación",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "¿De dónde salió el famoso grito «¡Yabba-Dabba-Doo!» de Pedro Picapiedra?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Estaba escrito en el guion original como el grito característico de Pedro." },
+            { "id": "b", "text": "Fue una improvisación del actor de doblaje Alan Reed para sustituir un soso «Yahoo!» del guion." },
+            { "id": "c", "text": "Era una expresión que Alan Reed escuchaba decir a su madre." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "En el guion original ponía que Fred Flintstone debía gritar «Yahoo!». El actor Alan Reed lo encontró poco expresivo y propuso a Joseph Barbera cambiarlo por «Yabba-Dabba-Doo!».",
+          "extraFact": "En 1987 Los Picapiedra y Los Supersónicos se cruzaron en una película gracias a una máquina del tiempo inventada por Elroy."
+        },
+        {
+          "id": "q-017",
+          "type": "single_choice",
+          "category": "Cine y Animación",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Cuál de estas afirmaciones sobre Shrek es FALSA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Su diseño se inspiró principalmente en las ilustraciones del libro infantil 'Shrek!' (1990) de William Steig." },
+            { "id": "b", "text": "Antes de Mike Myers, el actor Chris Farley había grabado gran parte de los diálogos de Shrek." },
+            { "id": "c", "text": "DreamWorks confirmó oficialmente que utilizó fotos del luchador francés Maurice Tillet como modelo para crear al ogro." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "Aunque el parecido físico entre Shrek y el luchador Maurice Tillet (que padecía acromegalia) es asombroso, DreamWorks nunca confirmó haberse basado en él. El diseño procede del libro infantil de William Steig.",
+          "extraFact": "Chris Farley grabó entre el 80 % y 90 % de los diálogos antes de fallecer en 1997; luego Mike Myers rehízo el papel y pidió regrabar todo con acento escocés."
+        },
+        {
+          "id": "q-018",
+          "type": "single_choice",
+          "category": "Cine",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Cómo se creó el característico rugido de Chewbacca en Star Wars?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Mezclando sonidos de leones, tigres y osos." },
+            { "id": "b", "text": "Combinando grabaciones de animales como osos, morsas y otros mamíferos." },
+            { "id": "c", "text": "Distorsionando la voz del propio George Lucas." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "El diseñador de sonido Ben Burtt combinó grabaciones reales de osos, morsas, leones marinos y otros animales para dar a Chewbacca una voz expresiva e inconfundible.",
+          "extraFact": "El mismo Ben Burtt creó el sonido de los sables láser mezclando el zumbido de un proyector antiguo con interferencias de un televisor."
+        },
+        {
+          "id": "q-019",
+          "type": "single_choice",
+          "category": "Cine",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Por qué en la película Tiburón (1975) vemos tan poco al tiburón durante buena parte del metraje?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Porque el tiburón mecánico era tan realista que Spielberg decidió reservarlo para el final." },
+            { "id": "b", "text": "Porque los tiburones mecánicos sufrían constantes averías por el agua salada y no funcionaban." },
+            { "id": "c", "text": "Porque la productora prohibió mostrarlo para evitar censura por violencia." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "El tiburón mecánico, apodado Bruce, se averiaba continuamente en el mar. Spielberg tuvo que sugerir su presencia mediante planos subjetivos y música, logrando mucha más tensión.",
+          "extraFact": "Aquellos fallos técnicos forzaron una de las decisiones de montaje más famosas de la historia del cine de suspense."
+        },
+        {
+          "id": "q-020",
+          "type": "single_choice",
+          "category": "Cine",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "¿Qué es el famoso «grito de Wilhelm» que aparece escondido en cientos de películas?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Un grito grabado originalmente para un western de 1951 y reutilizado durante décadas." },
+            { "id": "b", "text": "El grito real de un actor que sufrió un accidente durante un rodaje." },
+            { "id": "c", "text": "Un efecto de sonido sintetizado por ordenador para Star Wars." }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "Se grabó para la película 'Distant Drums' (1951) en una escena con un caimán. Años después Ben Burtt lo recuperó para Star Wars y lo convirtió en un guiño entre técnicos de sonido.",
+          "extraFact": "Puedes escucharlo en Indiana Jones, El Señor de los Anillos, Toy Story y centenares de películas y series."
+        },
+        {
+          "id": "q-021",
+          "type": "single_choice",
+          "category": "Televisión",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué secreto escondía la famosa cafetería Central Perk de la serie Friends?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "El café que bebían los actores era en realidad café descafeinado." },
+            { "id": "b", "text": "Era un decorado construido en estudio y el público veía las escenas grabarse en directo." },
+            { "id": "c", "text": "Era una cafetería real de Nueva York donde el equipo rodaba de madrugada." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Central Perk no existía en Nueva York: era un decorado en los estudios de Warner Bros. en California, donde la serie se grababa ante público real en directo.",
+          "extraFact": "Las risas que escuchamos en la serie eran reacciones reales del público asistente en el plató."
+        },
+        {
+          "id": "q-022",
+          "type": "single_choice",
+          "category": "Cine",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "¿Qué ocurrió con el primer actor contratado para interpretar a Marty McFly en Regreso al futuro?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Fue despedido tras varias semanas de rodaje y sustituido por Michael J. Fox." },
+            { "id": "b", "text": "Rechazó el papel porque no quería trabajar con Christopher Lloyd." },
+            { "id": "c", "text": "El estudio lo cambió porque no sabía conducir el DeLorean." }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "Eric Stoltz rodó durante semanas como Marty McFly, pero Zemeckis y Spielberg vieron que su tono era demasiado serio y lo sustituyeron por su primera opción, Michael J. Fox, volviendo a rodar las escenas.",
+          "extraFact": "Todavía se conservan fotografías y breves fragmentos de archivo de Eric Stoltz vestido con el chaleco rojo de Marty."
+        },
+        {
+          "id": "q-023",
+          "type": "single_choice",
+          "category": "Cine",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Qué dijo realmente Darth Vader al revelar a Luke Skywalker que era su padre en El Imperio contraataca?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Dice exactamente «Luke, yo soy tu padre», estrenada un 25 de diciembre." },
+            { "id": "b", "text": "Nunca pronuncia «Luke»; dice exactamente «No, yo soy tu padre»." },
+            { "id": "c", "text": "Originalmente decía «No, yo soy tu padre», pero Lucas añadió «Luke» en una edición posterior." },
+            { "id": "d", "text": "David Prowse pronunció la frase definitiva en el rodaje y fue el primero en saber el secreto." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Cuando Luke le acusa de haber matado a su padre, Vader responde: «No. Yo soy tu padre». La palabra «Luke» se añadió popularmente al citarla fuera de contexto.",
+          "extraFact": "Durante el rodaje, a Mark Hamill le hicieron creer que Vader decía que Obi-Wan había matado a su padre para evitar filtraciones; la voz definitiva la puso James Earl Jones."
+        },
+        {
+          "id": "q-024",
+          "type": "single_choice",
+          "category": "Cine y Animación",
+          "difficulty": "medium",
+          "timeLimit": 30,
+          "prompt": "¿Cuál de estas historias sobre los secretos de producción de Toy Story es la única VERDADERA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Woody pronuncia «¡Hay una serpiente en mi bota!» exactamente 23 veces en la primera película." },
+            { "id": "b", "text": "Pizza Planeta se llamó así porque la película iba a estrenarse el día de Navidad." },
+            { "id": "c", "text": "Pixar borró por error ~90 % de los archivos de Toy Story 2, fallaron las copias y se salvó gracias al ordenador doméstico de una empleada." },
+            { "id": "d", "text": "La frase original de Buzz en español era «¡Hacia el infinito y más allá!», pero el público la recuerda mal." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "En 1998 un comando erróneo borró casi toda Toy Story 2 de los servidores de Pixar y las copias de seguridad fallaron. La directora técnica Galyn Susman tenía una copia en casa porque teletrabajaba tras dar a luz y salvó la película.",
+          "extraFact": "El bebé de Galyn Susman aparece acreditado en los créditos finales de Toy Story 2 dentro de la sección 'Production Babies'."
+        }
+      ]
+    },
+    {
+      "id": "ciencia-y-naturaleza",
+      "title": "Ciencia y Naturaleza Insólita",
+      "description": "Curiosidades biológicas y animales que parecen inventadas pero son reales",
+      "questions": [
+        {
+          "id": "q-025",
+          "type": "single_choice",
+          "category": "Biología Marina",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "Los pulpos son animales extraordinarios con algo en su anatomía que parece de ciencia ficción. ¿Cuál es VERDADERA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Tienen tres corazones y la sangre de color azul." },
+            { "id": "b", "text": "Tienen dos corazones y sangre transparente sin transporte de oxígeno." },
+            { "id": "c", "text": "Tienen un único corazón, pero pueden detenerlo voluntariamente para esconderse." }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "Tienen dos corazones branquiales que bombean sangre a las branquias y uno sistémico para el cuerpo. Su sangre es azul porque usa hemocianina (con cobre) en lugar de hemoglobina (con hierro).",
+          "extraFact": "Además, su corazón principal deja de latir cuando nadan, por eso prefieren caminar por el fondo marino. ¡Y tienen nueve centros nerviosos repartidos por el cuerpo y brazos!"
+        },
+        {
+          "id": "q-026",
+          "type": "single_choice",
+          "category": "Naturaleza",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿De qué forma hace caca el wombat, un marsupial originario de Australia?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "En forma de rosquillas, para hacerlas rodar por las colinas y extender su territorio." },
+            { "id": "b", "text": "En forma de cubos, para apilarlos y marcar su territorio sin que rueden." },
+            { "id": "c", "text": "En forma de lazos, para llamar la atención durante el cortejo." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "El wombat es el único animal conocido que produce excrementos cúbicos. La distinta elasticidad de las paredes de su intestino y la deshidratación moldean los cubos, que no ruedan al marcar piedras y troncos.",
+          "extraFact": "Un wombat puede producir entre 80 y 100 cubitos al día. ¡Todo un pequeño fabricante de dados australiano!"
+        },
+        {
+          "id": "q-027",
+          "type": "single_choice",
+          "category": "Naturaleza",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué hace realmente un avestruz cuando se asusta o detecta un peligro?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Esconde la cabeza bajo tierra para no ver al depredador." },
+            { "id": "b", "text": "Se tumba y aplasta el cuello contra el suelo para pasar desapercibido." },
+            { "id": "c", "text": "Sale corriendo y puede alcanzar velocidades cercanas a los 70 km/h." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "La imagen del avestruz enterrando la cabeza es un mito falso. Cuando se siente amenazado huye a gran velocidad o se defiende con poderosas patadas. La confusión viene de verlos agacharse al cuidar sus nidos.",
+          "extraFact": "El avestruz es el ave más grande del mundo y sus ojos son literalmente más grandes que su cerebro."
+        }
+      ]
+    },
+    {
+      "id": "historia-y-errores",
+      "title": "Historia, Ciencia Espacial y Tradiciones",
+      "description": "Mitos históricos desmontados y anécdotas reales sorprendentes",
+      "questions": [
+        {
+          "id": "q-028",
+          "type": "single_choice",
+          "category": "Historia",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Era realmente Napoleón Bonaparte tan bajito como nos han contado?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Sí, medía aproximadamente 1,55 m y era considerado muy bajo incluso para su época." },
+            { "id": "b", "text": "No, medía alrededor de 1,68-1,69 m, una estatura bastante normal para aquel tiempo." },
+            { "id": "c", "text": "No, en realidad superaba el 1,85 m pero la propaganda lo dibujaba pequeño." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Su estatura se registró en pulgadas francesas de la época (distintas a las inglesas), lo que generó confusión. Además, solía rodearse de su guardia imperial, formada por soldados muy altos.",
+          "extraFact": "De este malentendido nació la expresión popular «complejo de Napoleón»."
+        },
+        {
+          "id": "q-029",
+          "type": "single_choice",
+          "category": "Historia",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué pensaba la mayoría de las personas cultas de la Edad Media sobre la forma de la Tierra?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Que era plana y que los barcos podían caer por el borde del mundo." },
+            { "id": "b", "text": "Que era esférica, una idea conocida y defendida desde la Antigüedad." },
+            { "id": "c", "text": "Que tenía forma de disco rodeado por un océano de fuego." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Los estudiosos medievales sabían que la Tierra era esférica. El debate sobre el viaje de Colón no era la forma del planeta, sino su tamaño: Colón subestimó la circunferencia terrestre y tuvo suerte de topar con América.",
+          "extraFact": "Eratóstenes ya había calculado la circunferencia de la Tierra hace más de 2.000 años usando sombras y geometría."
+        },
+        {
+          "id": "q-030",
+          "type": "single_choice",
+          "category": "Historia",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Qué provocó el inicio de la llamada «Guerra del Fútbol» de 1969 entre El Salvador y Honduras?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Un partido de fútbol que acabó con una pelea multitudinaria entre jugadores." },
+            { "id": "b", "text": "Un conflicto político, migratorio y agrario previo que estalló durante una eliminatoria mundialista." },
+            { "id": "c", "text": "Una apuesta entre los presidentes de ambos países sobre el ganador del Mundial." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "El fútbol no fue la causa real, sino la chispa. Ya existían graves tensiones migratorias, agrarias y políticas entre ambos países que estallaron en una guerra de unas 100 horas tras los partidos clasificatorios.",
+          "extraFact": "Aunque duró apenas cuatro días, el conflicto dejó miles de víctimas y desplazados."
+        },
+        {
+          "id": "q-031",
+          "type": "single_choice",
+          "category": "Historia",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "¿Cuánto duró aproximadamente la guerra anglo-zanzibarí de 1896, la guerra más corta de la historia?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "38 minutos." },
+            { "id": "b", "text": "3 horas y 38 minutos." },
+            { "id": "c", "text": "24 horas exactas." }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "El 27 de agosto de 1896, tras expirar un ultimátum británico al sultán Khalid bin Barghash, la armada británica bombardeó el palacio. La resistencia terminó en apenas 38 minutos.",
+          "extraFact": "Duró menos que un capítulo de muchas series actuales."
+        },
+        {
+          "id": "q-032",
+          "type": "single_choice",
+          "category": "Ciencia y Espacio",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Es verdad que la NASA gastó millones para inventar un bolígrafo espacial mientras los soviéticos usaban lápices?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Sí, la NASA invirtió millones y los soviéticos lo resolvieron con simples lápices." },
+            { "id": "b", "text": "No, ambos usaron lápices al principio, pero eran peligrosos y una empresa privada desarrolló el bolígrafo presurizado." },
+            { "id": "c", "text": "No, los astronautas usaban rotuladores especiales con tinta magnética." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Ambos programas usaron lápices inicialmente, pero las puntas rotas y el grafito flotante eran un riesgo eléctrico e inflamable. Paul Fisher desarrolló el Space Pen de forma privada y tanto la NASA como la URSS acabaron comprándolo.",
+          "extraFact": "El Fisher Space Pen escribe en microgravedad, bajo el agua y a temperaturas extremas."
+        },
+        {
+          "id": "q-033",
+          "type": "single_choice",
+          "category": "Cultura y Tradiciones",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué fruta comieron Adán y Eva en el Jardín del Edén, según el texto de la Biblia?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Una manzana, tal como aparece en las pinturas clásicas." },
+            { "id": "b", "text": "Un higo, porque usaron sus hojas para cubrirse." },
+            { "id": "c", "text": "La Biblia no especifica qué fruta era." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "El Génesis habla del «fruto del árbol del conocimiento del bien y del mal», sin especificar la especie. La manzana se popularizó en el arte occidental, ayudada por el parecido en latín entre 'malum' (mal) y 'malum' (manzana).",
+          "extraFact": "Aunque sí se mencionan hojas de higuera para cubrirse, eso tampoco indica que el fruto fuera un higo."
+        },
+        {
+          "id": "q-034",
+          "type": "single_choice",
+          "category": "Cultura y Tradiciones",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Cuántos Reyes Magos aparecen mencionados exactamente en la Biblia?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Tres, llamados Melchor, Gaspar y Baltasar." },
+            { "id": "b", "text": "Dos, aunque siglos después se añadió un tercero." },
+            { "id": "c", "text": "No se especifica cuántos eran, ni que fueran reyes, ni sus nombres." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "El Evangelio de Mateo menciona a «unos magos de Oriente», pero no indica cuántos eran, ni los llama reyes, ni da sus nombres. Lo que sí enumera son tres regalos: oro, incienso y mirra.",
+          "extraFact": "La tradición posterior asoció un personaje a cada regalo y consolidó los nombres de Melchor, Gaspar y Baltasar."
+        },
+        {
+          "id": "q-035",
+          "type": "single_choice",
+          "category": "Arqueología e Historia",
+          "difficulty": "hard",
+          "timeLimit": 30,
+          "prompt": "Secretos enterrados: ¿cuál de estas cuatro historias es FALSA?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "En 1983 Atari enterró miles de cartuchos (incluido E.T.) en Nuevo México y fueron excavados en 2014." },
+            { "id": "b", "text": "El decorado egipcio de 'Los Diez Mandamientos' (1923) fue enterrado en dunas de California y desenterrado décadas después." },
+            { "id": "c", "text": "En los años 80 la URSS enterró robots humanoides y superordenadores en el desierto de Karakum." },
+            { "id": "d", "text": "Miles de soldados y caballos de terracota fueron enterrados junto al mausoleo del primer emperador de China." }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "El supuesto cementerio tecnológico soviético en Karakum es una historia inventada. En cambio, tanto el vertedero de Atari en Alamogordo, como el decorado de Cecil B. DeMille en Guadalupe y el Ejército de Terracota son totalmente reales.",
+          "extraFact": "El Ejército de Terracota fue descubierto por azar en 1974 por unos agricultores que excavaban un pozo."
+        },
+        {
+          "id": "q-036",
+          "type": "single_choice",
+          "category": "Cultura y Calendario",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Por qué la Semana Santa cambia de fecha cada año mientras que la Navidad es siempre el 25 de diciembre?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Porque la Navidad viene de un censo romano exacto y la Pascua del calendario judío." },
+            { "id": "b", "text": "Porque la Pascua se calcula según el ciclo lunar y el equinoccio de primavera, mientras la Navidad usa una fecha fija del calendario solar." },
+            { "id": "c", "text": "Porque el viaje de los Reyes Magos desfasó el calendario de primavera." },
+            { "id": "d", "text": "Porque el papa Julio I movió la Navidad para que coincidiera con el solsticio." }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "Desde el Concilio de Nicea (325 d. C.) la Pascua se celebra el primer domingo tras la primera luna llena posterior al 21 de marzo (referencia eclesiástica del equinoccio), por lo que varía entre el 22 de marzo y el 25 de abril.",
+          "extraFact": "La fecha de Navidad (25 de diciembre) quedó fijada en el calendario solar aunque no se conozca el día exacto del nacimiento de Jesús."
+        }
+      ]
+    },
+    {
+      "id": "modos-especiales",
+      "title": "Modos Especiales (Mix)",
+      "description": "Preguntas de Respuesta Múltiple, Verdadero/Falso, Visual y Relámpago",
+      "questions": [
+        {
+          "id": "q-037",
+          "type": "multiple_choice",
+          "category": "Marcas y Secretos",
+          "difficulty": "medium",
+          "timeLimit": 25,
+          "prompt": "¿Cuáles de estas afirmaciones sobre la historia de Toy Story 2 y Shrek son VERDADERAS? (Selecciona todas las correctas)",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Pixar perdió temporalmente ~90 % de Toy Story 2 por un comando erróneo." },
+            { "id": "b", "text": "Shrek está basado oficialmente en el luchador Maurice Tillet." },
+            { "id": "c", "text": "Galyn Susman salvó Toy Story 2 gracias a una copia en su ordenador doméstico." },
+            { "id": "d", "text": "Chris Farley grabó gran parte de la voz de Shrek antes de Mike Myers." }
+          ],
+          "correctOptionIds": ["a", "c", "d"],
+          "explanation": "Tanto el borrado accidental de Toy Story 2 salvado por Galyn Susman como las grabaciones previas de Chris Farley para Shrek son reales. En cambio, DreamWorks nunca confirmó haberse basado en Maurice Tillet.",
+          "extraFact": "En respuestas múltiples, ¡marcar opciones incorrectas resta puntos de los aciertos!"
+        },
+        {
+          "id": "q-038",
+          "type": "true_false",
+          "category": "Naturaleza",
+          "difficulty": "easy",
+          "timeLimit": 15,
+          "prompt": "Verdadero o Falso: Los plátanos contienen un isótopo radiactivo natural (potasio-40), pero su cantidad es inofensiva.",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Verdadero" },
+            { "id": "b", "text": "Falso" }
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "¡Es verdadero! Los plátanos son ricos en potasio, y una pequeñísima fracción natural es potasio-40 radiactivo. Sin embargo, la dosis es minúscula y completamente inofensiva.",
+          "extraFact": "Existe incluso una medida informal llamada «dosis equivalente a un plátano» (BED) usada en divulgación científica."
+        },
+        {
+          "id": "q-039",
+          "type": "visual",
+          "category": "Astronomía y Cine",
+          "difficulty": "medium",
+          "timeLimit": 20,
+          "prompt": "Observa la constelación de Orión. La estrella roja brillante señalada arriba a la izquierda da nombre real a un famoso fantasma del cine. ¿Cuál es?",
+          "media": {
+            "questionImage": "/assets/images/orion.svg",
+            "revealImage": "/assets/images/orion.svg",
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Rigel" },
+            { "id": "b", "text": "Betelgeuse" },
+            { "id": "c", "text": "Aldebarán" },
+            { "id": "d", "text": "Sirio" }
+          ],
+          "correctOptionIds": ["b"],
+          "explanation": "La supergigante roja en el hombro izquierdo de Orión es Betelgeuse, que inspiró el nombre original del personaje de Bitelchús (Beetlejuice).",
+          "extraFact": "Es una candidata conocida a convertirse en supernova, aunque no sabemos exactamente cuándo ocurrirá."
+        },
+        {
+          "id": "q-040",
+          "type": "visual",
+          "category": "Astronomía",
+          "difficulty": "easy",
+          "timeLimit": 20,
+          "prompt": "¿Qué planeta aparece en la imagen con su famosa Gran Mancha Roja?",
+          "media": {
+            "questionImage": "/assets/images/jupiter.svg",
+            "revealImage": "/assets/images/jupiter.svg",
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "Marte" },
+            { "id": "b", "text": "Saturno" },
+            { "id": "c", "text": "Júpiter" },
+            { "id": "d", "text": "Neptuno" }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "Es Júpiter, el planeta más grande del sistema solar. Su Gran Mancha Roja es una gigantesca tormenta anticiclónica mayor que la Tierra.",
+          "extraFact": "Su diámetro supera los 142.000 km: cabrían más de 1.300 Tierras en su volumen."
+        },
+        {
+          "id": "q-041",
+          "type": "lightning",
+          "category": "Relámpago",
+          "difficulty": "easy",
+          "timeLimit": 7,
+          "prompt": "⚡ ¡RELÁMPAGO! ¿Cuántos corazones tiene un pulpo?",
+          "media": {
+            "questionImage": null,
+            "revealImage": null,
+            "questionAudio": null,
+            "revealAudio": null
+          },
+          "options": [
+            { "id": "a", "text": "1" },
+            { "id": "b", "text": "2" },
+            { "id": "c", "text": "3" },
+            { "id": "d", "text": "4" }
+          ],
+          "correctOptionIds": ["c"],
+          "explanation": "¡Tres corazones! Dos bombean sangre a las branquias y uno al resto del cuerpo.",
+          "extraFact": "En las preguntas relámpago consigues un multiplicador ×1.5 por velocidad."
+        }
+      ]
+    }
+  ]
+}
+

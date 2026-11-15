@@ -1,0 +1,19 @@
+{
+  "name": "QUIZÓN — Concurso en TV",
+  "short_name": "QUIZÓN",
+  "description": "Juego multijugador por equipos de preguntas y respuestas para TV y móviles.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1026",
+  "theme_color": "#4338ca",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

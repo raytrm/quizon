@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#4338ca" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+  <title>QUIZÓN — Mando de Equipo</title>
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/player.css" />
+</head>
+<body class="player-body">
+  <header class="player-header">
+    <div>
+      <strong style="font-size: 1.25rem;">QUIZ<span style="color: var(--gold);">ÓN</span></strong>
+      <div id="player-team-header" style="font-size: 0.85rem; color: var(--text-muted);">Sin equipo</div>
+    </div>
+    <div style="text-align: right;">
+      <span id="player-score-badge" class="badge gold">0 pts</span>
+    </div>
+  </header>
+
+  <main class="player-main">
+    <!-- PASO 1: UNIRSE A SALA -->
+    <section id="p-view-join" class="card">
+      <h2 style="margin-bottom: 1rem;">Unirse a una partida</h2>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="input-room-code">Código de sala (6 dígitos)</label>
+        <div style="display: flex; gap: 0.5rem;">
+          <input id="input-room-code" type="tel" maxlength="6" placeholder="123456" inputmode="numeric" />
+          <button id="btn-check-room" class="btn btn-ghost" type="button">Buscar</button>
+        </div>
+      </div>
+
+      <div class="mode-tabs">
+        <button id="tab-create-team" class="mode-tab active" type="button">Crear equipo</button>
+        <button id="tab-join-team" class="mode-tab" type="button">Equipo existente</button>
+      </div>
+
+      <div id="panel-create-team">
+        <div style="margin-bottom: 0.85rem;">
+          <label for="input-team-name">Nombre del equipo</label>
+          <input id="input-team-name" type="text" maxlength="28" placeholder="Ej. Los Invencibles" />
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label for="input-team-members">Integrantes (opcional, separados por coma)</label>
+          <input id="input-team-members" type="text" placeholder="Ej. Ana, Luis, Carlos" />
+        </div>
+      </div>
+
+      <div id="panel-join-team" class="hidden" style="margin-bottom: 1rem;">
+        <label for="select-existing-team">Elige un equipo de la sala</label>
+        <select id="select-existing-team">
+          <option value="">Introduce primero el código de sala...</option>
+        </select>
+      </div>
+
+      <button id="btn-join-game" class="btn btn-success btn-lg" type="button">Entrar al concurso</button>
+    </section>
+
+    <!-- LOBBY ESPERANDO -->
+    <section id="p-view-wait" class="card status-box hidden">
+      <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎯</div>
+      <h2 id="wait-title">¡Listos para jugar!</h2>
+      <p id="wait-subtitle" style="color: var(--text-muted);">Esperando a que el anfitrión inicie la partida...</p>
+    </section>
+
+    <!-- PREGUNTA ACTIVA -->
+    <section id="p-view-question" class="hidden" style="display: flex; flex-direction: column; gap: 0.9rem;">
+      <div class="player-timer-pill">⏱️ <span id="p-timer-seconds">20</span> s</div>
+      <p id="p-question-hint" style="text-align: center; color: var(--text-muted); font-size: 0.95rem;"></p>
+      <div id="p-options-list" class="player-options"></div>
+      <button id="btn-confirm-multi" class="btn btn-success btn-lg hidden" type="button">
+        Confirmar respuesta
+      </button>
+    </section>
+
+    <!-- RESULTADO DE RONDA / FIN -->
+    <section id="p-view-result" class="card status-box hidden">
+      <div id="result-emoji" style="font-size: 3.4rem; margin-bottom: 0.4rem;">✅</div>
+      <h2 id="result-title">¡Correcto!</h2>
+      <p id="result-points" style="font-size: 1.4rem; font-weight: 800; color: var(--gold); margin: 0.4rem 0;"></p>
+      <p id="result-rank" style="color: var(--text-muted);"></p>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="/js/player.js"></script>
+</body>
+</html>
+

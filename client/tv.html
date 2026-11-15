@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090d1f" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+  <title>QUIZÓN — Pantalla TV</title>
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/tv.css" />
+</head>
+<body class="tv-body">
+  <header class="tv-header">
+    <div class="tv-brand">📺 QUIZ<span>ÓN</span> <small id="tv-match-title" style="font-size: 1rem; color: var(--text-muted); font-weight: 600;"></small></div>
+    <div class="tv-room-pill">
+      <span id="tv-round-badge" class="badge hidden"></span>
+      <span>SALA:</span>
+      <span id="tv-header-code" class="tv-code">------</span>
+    </div>
+  </header>
+
+  <main class="tv-main">
+    <!-- LOBBY / LOBBY_UNCLAIMED -->
+    <section id="view-lobby" class="tv-lobby-grid">
+      <div class="card qr-panel">
+        <span id="lobby-qr-badge" class="badge gold">Paso 1: Anfitrión</span>
+        <p id="lobby-qr-instruction" style="color: var(--text-muted); font-size: 1.05rem;">
+          Escanea el QR o abre <strong>/host</strong> e introduce este código para tomar el control:
+        </p>
+        <div class="qr-box">
+          <img id="lobby-qr-img" alt="Código QR de sala" />
+        </div>
+        <div id="lobby-code-big" class="big-code">------</div>
+        <div id="lobby-url-hint" style="font-size: 0.85rem; color: var(--text-muted); word-break: break-all;"></div>
+      </div>
+
+      <div class="card" style="display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 style="font-size: 1.7rem;">Equipos conectados (<span id="lobby-team-count">0</span>)</h2>
+          <span id="lobby-host-status" class="badge">Esperando anfitrión...</span>
+        </div>
+        <div id="lobby-teams-grid" class="teams-grid"></div>
+      </div>
+    </section>
+
+    <!-- QUESTION INTRO -->
+    <section id="view-intro" class="tv-intro hidden">
+      <span id="intro-badge" class="badge gold">Pregunta 1</span>
+      <h1 id="intro-category">Categoría</h1>
+      <p id="intro-type-hint" style="font-size: 1.5rem; color: var(--text-muted);"></p>
+    </section>
+
+    <!-- QUESTION ACTIVE & REVEAL -->
+    <section id="view-question" class="tv-question-layout hidden">
+      <div class="tv-timer-wrap">
+        <span id="q-type-badge" class="badge">Opción múltiple</span>
+        <div class="tv-timer-bar"><div id="q-timer-fill" class="tv-timer-fill"></div></div>
+        <div id="q-timer-seconds" class="tv-timer-seconds">20</div>
+        <span id="q-answered-pill" class="badge gold">0 / 0 equipos</span>
+      </div>
+
+      <h2 id="q-prompt" class="tv-question-prompt"></h2>
+
+      <div id="q-media-wrap" class="tv-question-media hidden">
+        <img id="q-media-img" alt="Imagen de la pregunta" />
+      </div>
+
+      <div id="q-options-grid" class="tv-options-grid"></div>
+
+      <div id="q-reveal-box" class="tv-reveal-box hidden">
+        <div>
+          <strong style="color: #4ade80; font-size: 1.15rem; display: block; margin-bottom: 0.35rem;">💡 Explicación</strong>
+          <p id="q-explanation"></p>
+          <div id="q-extra-fact" class="tv-extra-fact hidden"></div>
+        </div>
+        <img id="q-reveal-img" class="hidden" style="max-height: 150px; border-radius: 12px;" alt="Imagen de explicación" />
+      </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section id="view-leaderboard" class="hidden" style="text-align: center;">
+      <span class="badge gold">Clasificación</span>
+      <h2 style="font-size: 2.3rem; margin: 0.5rem 0 1rem;">Ranking de Equipos</h2>
+      <div id="leaderboard-list" class="standings-list"></div>
+    </section>
+
+    <!-- FINISHED -->
+    <section id="view-finished" class="hidden" style="text-align: center;">
+      <span class="badge gold">¡Fin del Concurso!</span>
+      <h2 style="font-size: 2.5rem; margin-top: 0.4rem;">Podio Final</h2>
+      <div id="podium-grid" class="podium-grid"></div>
+      <div id="final-standings-list" class="standings-list"></div>
+      <div id="final-stats-grid" class="stats-grid"></div>
+    </section>
+  </main>
+
+  <!-- Overlay de Pausa -->
+  <div id="overlay-paused" class="tv-overlay hidden">
+    <div style="font-size: 4rem;">⏸️</div>
+    <h2 style="font-size: 2.8rem;">Partida en Pausa</h2>
+    <p style="color: var(--text-muted); font-size: 1.25rem;">El anfitrión ha pausado temporalmente el concurso.</p>
+  </div>
+
+  <!-- Overlay de Audio Autoplay -->
+  <div id="overlay-audio" class="tv-overlay">
+    <div style="font-size: 4rem;">🔊</div>
+    <h2 style="font-size: 2.4rem;">Activar Pantalla y Sonido</h2>
+    <p style="color: var(--text-muted); max-width: 520px; font-size: 1.15rem;">
+      Los navegadores requieren un clic inicial en la TV para permitir música y efectos de concurso.
+    </p>
+    <button id="btn-unlock-audio" class="btn btn-success" style="font-size: 1.3rem; padding: 1rem 2.2rem;">
+      Activar sonido y empezar
+    </button>
+    <button id="btn-skip-audio" class="btn btn-ghost">Continuar en silencio</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="/js/tv.js"></script>
+</body>
+</html>
+
