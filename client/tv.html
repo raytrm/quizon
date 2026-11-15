@@ -12,6 +12,11 @@
   <link rel="stylesheet" href="/css/tv.css" />
 </head>
 <body class="tv-body">
+  <div id="bg-stage" class="bg-stage hidden">
+    <img id="bg-layer-a" class="bg-layer ken-burns" alt="" />
+    <img id="bg-layer-b" class="bg-layer ken-burns" alt="" />
+    <div id="bg-scrim" class="bg-scrim"></div>
+  </div>
   <header class="tv-header">
     <div class="tv-brand">📺 QUIZ<span>ÓN</span> <small id="tv-match-title" style="font-size: 1rem; color: var(--text-muted); font-weight: 600;"></small></div>
     <div class="tv-room-pill">
@@ -52,13 +57,17 @@
       <p id="intro-type-hint" style="font-size: 1.5rem; color: var(--text-muted);"></p>
     </section>
 
-    <!-- QUESTION ACTIVE & REVEAL -->
+    <!-- QUESTION ACTIVE, TIME_UP & REVEAL -->
     <section id="view-question" class="tv-question-layout hidden">
-      <div class="tv-timer-wrap">
+      <div id="q-timer-wrap" class="tv-timer-wrap">
         <span id="q-type-badge" class="badge">Opción múltiple</span>
         <div class="tv-timer-bar"><div id="q-timer-fill" class="tv-timer-fill"></div></div>
         <div id="q-timer-seconds" class="tv-timer-seconds">20</div>
         <span id="q-answered-pill" class="badge gold">0 / 0 equipos</span>
+      </div>
+
+      <div id="q-timeup-banner" class="tv-timeup-banner hidden">
+        ⏱️ ¡Se acabó el tiempo! Esperando al moderador para mostrar la solución...
       </div>
 
       <h2 id="q-prompt" class="tv-question-prompt"></h2>

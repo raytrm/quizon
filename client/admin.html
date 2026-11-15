@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090d1f" />
+  <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+  <title>QUIZÓN — Editor de Juegos y Preguntas</title>
+  <link rel="stylesheet" href="/css/global.css" />
+  <style>
+    body.admin-body {
+      min-height: 100vh;
+      padding: 1rem 1.5rem 2.5rem;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    .admin-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .q-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 62vh;
+      overflow-y: auto;
+      margin-top: 0.75rem;
+      padding-right: 0.25rem;
+    }
+
+    .q-item {
+      text-align: left;
+      padding: 0.7rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .q-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .q-item.active {
+      background: rgba(99, 102, 241, 0.22);
+      border-color: var(--primary);
+    }
+
+    .q-item-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+    }
+
+    @media (max-width: 640px) {
+      .form-row-2,
+      .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .opt-editor-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto auto;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .media-role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.75rem;
+    }
+
+    .media-role-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+    }
+
+    .media-thumbs {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.65rem;
+    }
+
+    .media-thumb {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #090d1f;
+      aspect-ratio: 16 / 10;
+    }
+
+    .media-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-thumb button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(239, 68, 68, 0.9);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: rgba(9, 13, 31, 0.75);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      overflow: hidden;
+      resize: none;
+    }
+
+    textarea.opt-text-input {
+      padding: 0.55rem 0.75rem;
+      min-height: 40px;
+    }
+  </style>
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <div>
+      <strong style="font-size: 1.4rem;">🛠️ QUIZ<span style="color: var(--gold);">ÓN</span> · Editor de Juegos</strong>
+      <div style="font-size: 0.85rem; color: var(--text-muted);">Crea packs nuevos, edita preguntas, respuestas e imágenes</div>
+    </div>
+    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+      <a href="/test-bg" target="_blank" rel="noopener" class="btn btn-ghost">🖼️ Probar Fondos</a>
+      <a href="/host" class="btn">🎛️ Volver al Anfitrión</a>
+    </div>
+  </header>
+
+  <div class="admin-grid">
+    <!-- Columna izquierda: Packs y Preguntas -->
+    <aside class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+        <h3>📚 Juegos / Packs</h3>
+        <button id="btn-new-pack" class="btn btn-ghost" type="button" style="padding: 0.35rem 0.65rem; font-size: 0.82rem;">+ Nuevo pack</button>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0.6rem;">
+        <select id="adm-pack-select"></select>
+      </div>
+
+      <div style="display: flex; gap: 0.45rem; margin-bottom: 0.9rem;">
+        <button id="btn-edit-pack" class="btn btn-ghost" type="button" style="flex: 1; padding: 0.4rem; font-size: 0.82rem;">✏️ Editar pack</button>
+        <button id="btn-delete-pack" class="btn btn-danger" type="button" style="padding: 0.4rem 0.65rem; font-size: 0.82rem;">🗑️</button>
+      </div>
+
+      <!-- Editor rápido de Pack -->
+      <div id="pack-editor-box" class="hidden" style="padding: 0.8rem; border-radius: var(--radius-sm); background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); margin-bottom: 0.9rem;">
+        <input id="pack-edit-id" type="hidden" />
+        <div class="form-group" style="margin-bottom: 0.5rem;">
+          <label for="pack-edit-title">Nombre del juego / pack</label>
+          <input id="pack-edit-title" type="text" placeholder="Ej. Noche de Cine" />
+        </div>
+        <div class="form-group" style="margin-bottom: 0.6rem;">
+          <label for="pack-edit-desc">Descripción</label>
+          <input id="pack-edit-desc" type="text" placeholder="Descripción breve..." />
+        </div>
+        <div style="display: flex; gap: 0.45rem;">
+          <button id="btn-save-pack" class="btn btn-success" type="button" style="flex: 1; padding: 0.45rem; font-size: 0.85rem;">Guardar pack</button>
+          <button id="btn-cancel-pack" class="btn btn-ghost" type="button" style="padding: 0.45rem 0.7rem; font-size: 0.85rem;">Cancelar</button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+        <h3>❓ Preguntas (<span id="adm-q-count">0</span>)</h3>
+        <button id="btn-new-question" class="btn btn-success" type="button" style="padding: 0.4rem 0.75rem; font-size: 0.85rem;">+ Nueva</button>
+      </div>
+
+      <div class="form-group" style="margin: 0.6rem 0 0;">
+        <input id="adm-search" type="search" placeholder="Buscar por texto, categoría o ID..." />
+      </div>
+
+      <div id="adm-q-list" class="q-list"></div>
+    </aside>
+
+    <!-- Columna derecha: Formulario de Pregunta -->
+    <main class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+        <h2 id="editor-title">Nueva Pregunta</h2>
+        <span id="editor-id-badge" class="badge gold">ID automático</span>
+      </div>
+
+      <form id="q-form">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="f-pack">Pack / Juego</label>
+            <select id="f-pack" required></select>
+          </div>
+          <div class="form-group">
+            <label for="f-type">Tipo de pregunta</label>
+            <select id="f-type">
+              <option value="single_choice">Opción múltiple (1 correcta)</option>
+              <option value="multiple_choice">Varias respuestas correctas</option>
+              <option value="true_false">Verdadero o Falso</option>
+              <option value="visual">Pregunta Visual</option>
+              <option value="lightning">⚡ Relámpago (×1.5)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label for="f-category">Categoría</label>
+            <input id="f-category" type="text" value="General" required />
+          </div>
+          <div class="form-group">
+            <label for="f-difficulty">Dificultad</label>
+            <select id="f-difficulty">
+              <option value="easy">Fácil</option>
+              <option value="medium" selected>Media</option>
+              <option value="hard">Difícil</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-timelimit">Tiempo (seg)</label>
+            <input id="f-timelimit" type="number" min="5" max="120" value="20" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-prompt">Enunciado de la pregunta</label>
+          <textarea id="f-prompt" rows="2" required placeholder="Escribe aquí la pregunta..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+            <label style="margin: 0;">Opciones (marca la(s) correcta(s))</label>
+            <button id="btn-add-option" class="btn btn-ghost" type="button" style="padding: 0.3rem 0.65rem; font-size: 0.82rem;">+ Añadir opción</button>
+          </div>
+          <div id="f-options-list"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-explanation">Explicación (aparece al revelar la solución)</label>
+          <textarea id="f-explanation" rows="3" placeholder="Explicación detallada de la respuesta correcta..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="f-extra-fact">Curiosidad adicional (opcional)</label>
+          <textarea id="f-extra-fact" rows="2" placeholder="Dato curioso que acompaña a la explicación..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem;">
+          <button id="btn-save-question" class="btn btn-success btn-lg" type="submit" style="flex: 1;">💾 Guardar pregunta</button>
+          <button id="btn-delete-question" class="btn btn-danger hidden" type="button">🗑️ Eliminar</button>
+        </div>
+      </form>
+
+      <!-- Gestor de Imágenes -->
+      <section id="adm-media-section" class="hidden" style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle);">
+        <h3>🖼️ Imágenes de la pregunta</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+          Se guardan automáticamente en <code>data/images/<span id="media-path-label"></span>/</code>
+        </p>
+
+        <div class="media-role-grid">
+          <div class="media-role-card">
+            <strong>🌄 Fondo en bucle (bg)</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Ambientación detrás del texto durante la pregunta.</p>
+            <input type="file" accept="image/*" multiple data-upload-role="bg" style="font-size: 0.8rem; width: 100%;" />
+            <div id="thumbs-bg" class="media-thumbs"></div>
+          </div>
+
+          <div class="media-role-card">
+            <strong>🔍 Pista visual (clue)</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imagen nítida necesaria para contestar.</p>
+            <input type="file" accept="image/*" multiple data-upload-role="clue" style="font-size: 0.8rem; width: 100%;" />
+            <div id="thumbs-clue" class="media-thumbs"></div>
+          </div>
+
+          <div class="media-role-card">
+            <strong>💡 Solución (explain)</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imágenes al mostrar la explicación.</p>
+            <input type="file" accept="image/*" multiple data-upload-role="explain" style="font-size: 0.8rem; width: 100%;" />
+            <div id="thumbs-explain" class="media-thumbs"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

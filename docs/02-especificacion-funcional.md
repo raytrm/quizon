@@ -25,10 +25,13 @@ QUESTION_INTRO (3s: número de pregunta, categoría y tipo; ej. "¡RELÁMPAGO!")
    │
    ▼
 QUESTION_ACTIVE (temporizador corriendo; los equipos envían su respuesta)
-   │  [Todos los equipos responden O se agota el tiempo]
+   │  [Todos responden O se agota el tiempo O Anfitrión pulsa "Finalizar tiempo"]
    ▼
-REVEAL (muestra respuesta correcta, explicación, imagen y puntos de la ronda)
-   │  [Anfitrión pulsa "Siguiente" O temporizador automático]
+TIME_UP (misma pantalla de pregunta indicando "¡Se acabó el tiempo!"; aún no muestra solución)
+   │  [Anfitrión pulsa "Mostrar solución" O auto-avance]
+   ▼
+REVEAL (muestra respuesta correcta, texto/enunciado, explicación detallada y curiosidades)
+   │  [Anfitrión pulsa "Ver resultados" O auto-avance]
    ▼
 LEADERBOARD (ranking parcial animado)
    │
@@ -51,13 +54,14 @@ FINISHED (podio final, ganador, estadísticas de la partida y opción "Jugar de 
    * **Nombre de la partida** (ej. "Noche de Viernes").
    * **Paquete / Categorías de preguntas** (o "Todas mezcladas").
    * **Número de preguntas:** 10, 15, 20 o Personalizado.
-   * **Avance entre preguntas:** Manual (el anfitrión pulsa Siguiente) o Automático (tras X segundos en `REVEAL`/`LEADERBOARD`).
+   * **Factor multiplicador de tiempo:** Slider de `0.5x` a `3.0x` (por defecto `1.0x`) para adaptar la duración de todas las preguntas al grupo.
+   * **Avance entre preguntas:** Manual (el anfitrión controla cuándo mostrar la solución, ver resultados y pasar a la siguiente pregunta) o Automático.
    * **Permitir entrada tardía (Late Join):** Sí / No.
 
 ### Paso 2: Conexión de Equipos
 * La TV muestra el **Código de 6 dígitos** y el **Código QR** apuntando a `http(s)://<host>/player?code=123456`.
 * Desde el móvil, el participante puede:
-  * **Crear un equipo nuevo:** Introduce el nombre del equipo y, opcionalmente, añade la lista de nombres de los jugadores que lo integran (no hace falta que todos tengan móvil).
+  * **Crear un equipo nuevo:** Introduce el nombre del equipo, elige un **color para su píldora** y un **icono**, y opcionalmente añade la lista de nombres de los jugadores que lo integran (no hace falta que todos tengan móvil).
   * **Unirse a un equipo existente:** Selecciona un equipo ya creado en la sala (si varios miembros quieren usar su propio móvil).
 * En la TV aparecen en tiempo real los equipos conectados y los nombres de sus integrantes.
 
@@ -71,15 +75,18 @@ FINISHED (podio final, ganador, estadísticas de la partida y opción "Jugar de 
 | **`visual`** (Visual) | 20 s | Imagen grande protagonista + opciones | Opciones (A, B, C, D) | Inmediato al tocar |
 | **`lightning`** (Relámpago) | 7 s | Alerta visual/sonora + pregunta corta + opciones | Botones grandes | Inmediato al tocar (puntos ×1.5) |
 
-* **Regla de primera respuesta por equipo:** Cuando un equipo tiene varios móviles conectados, la primera respuesta confirmada que llega al servidor se registra como la respuesta oficial del equipo. Los demás móviles del equipo reciben aviso de que el equipo ya ha respondido y quedan bloqueados para esa pregunta.
-* **Respuesta múltiple al agotarse el tiempo:** Si el tiempo termina sin haber pulsado "Confirmar respuesta", el servidor evalúa las opciones que el equipo tenía marcadas en ese instante (o `0` puntos si no había marcado ninguna).
+* **Selección modificable hasta fin de tiempo:** Al pulsar una opción, esta queda registrada y el botón permanece activado/resaltado en el móvil, pero el equipo puede **cambiar su selección** en cualquier momento mientras dure el reloj. El tiempo registrado para calcular el bonus de velocidad coincide siempre con la **última selección** realizada.
+* **Botón de envío con confirmación:** Adicionalmente, cada equipo dispone de un botón **"Enviar respuesta definitiva"** con doble toque de confirmación que bloquea su respuesta para esa ronda.
+* **Sincronización en equipos con varios móviles:** Si un equipo tiene varios dispositivos conectados, todos muestran la selección activa del equipo y prevalece la última selección enviada antes de confirmar o finalizar el tiempo.
+* **Fin de la ronda:** La fase de respuesta termina cuando **todos los equipos conectados confirman** su respuesta definitiva, cuando se agota el temporizador o cuando el anfitrión pulsa **"Finalizar tiempo"**.
 
-### Paso 5: Revelación y Ranking
-Cuando todos los equipos activos han respondido o el temporizador llega a `0`:
-1. La TV marca en verde la(s) opción(es) correcta(s) y atenúa las incorrectas.
-2. Se muestra la **explicación** breve y la **imagen de explicación** (si existe en la pregunta).
-3. El móvil muestra a cada equipo si acertó, cuántos puntos ganó en la ronda y su posición actual.
-4. En modo `LEADERBOARD`, la TV muestra la clasificación actualizada de equipos.
+### Paso 5: Fin de Tiempo, Solución y Ranking
+Cuando todos los equipos conectados confirman, el temporizador llega a `0` o el anfitrión pulsa **"Finalizar tiempo"**:
+1. La sala pasa a `TIME_UP`: en la misma pantalla de la pregunta se indica **"¡Se acabó el tiempo!"** y aparecen en **píldoras** (con el color, icono y nombre de cada equipo) junto a cada opción quienes la eligieron, sin revelar todavía cuál es la correcta.
+2. Cuando el moderador lo considera oportuno, pulsa **"Mostrar solución"** (`REVEAL`):
+   * Se ejecuta una transición visual: primero se **enfatiza** la(s) opción(es) correcta(s) y el resto se "apagan"; a continuación las opciones incorrectas **desaparecen**, la respuesta correcta **sube a la parte superior** bajo el enunciado y aparecen la **explicación detallada**, las **curiosidades (`extraFact`)** y la **imagen de explicación** (si existe).
+   * El móvil muestra a cada equipo si acertó, cuántos puntos ganó en la ronda y su posición actual.
+3. Cuando el anfitrión pulsa **"Ver resultados"**, la TV muestra el ranking actualizado de equipos (`LEADERBOARD`) o el podio final (`FINISHED`) si era la última pregunta.
 
 ### Paso 6: Finalización y Estadísticas
 Al terminar la última pregunta, la TV muestra:

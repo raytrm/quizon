@@ -11,6 +11,7 @@ quizon/
 │   ├── tv.html                 # Interfaz de Televisión
 │   ├── player.html             # Interfaz de Móvil (Equipo)
 │   ├── host.html               # Interfaz de Anfitrión
+│   ├── admin.html              # Editor visual de juegos, preguntas e imágenes (/admin)
 │   ├── manifest.json           # Manifiesto PWA
 │   ├── sw.js                   # Service Worker (caché de App Shell y assets)
 │   │
@@ -28,7 +29,8 @@ quizon/
 │   │   │   └── utils.js        # Formateo, temporizador sincronizado, storage
 │   │   ├── tv.js               # Controlador de vista TV
 │   │   ├── player.js           # Controlador de vista Equipo
-│   │   └── host.js             # Controlador de vista Anfitrión
+│   │   ├── host.js             # Controlador de vista Anfitrión
+│   │   └── admin.js            # Controlador de editor de juegos/preguntas (/admin)
 │   │
 │   └── assets/
 │       ├── images/             # Imágenes de preguntas, explicaciones y UI
@@ -62,6 +64,7 @@ En este primer alcance, `data/questions.json` centraliza los packs de preguntas,
 
 ```json
 {
+  "catalogId": "000001",
   "packs": [
     {
       "id": "cultura-general",
@@ -69,18 +72,12 @@ En este primer alcance, `data/questions.json` centraliza los packs de preguntas,
       "description": "Historia, ciencia, geografía y entretenimiento",
       "questions": [
         {
-          "id": "q-001",
+          "id": "00001",
           "type": "single_choice",
           "category": "Ciencia",
           "difficulty": "medium",
           "timeLimit": 20,
           "prompt": "¿Cuál es el planeta más grande del sistema solar?",
-          "media": {
-            "questionImage": null,
-            "revealImage": "/assets/images/jupiter.jpg",
-            "questionAudio": null,
-            "revealAudio": "/assets/sounds/reveal-success.mp3"
-          },
           "options": [
             { "id": "a", "text": "Saturno" },
             { "id": "b", "text": "Júpiter" },
@@ -115,23 +112,27 @@ Para una iteración posterior (fuera de este primer alcance), se añadirá `serv
 ### Cliente → Servidor
 * `tv:register` `{ roomCode? }` → Al abrir `/tv`, crea sala en `LOBBY_UNCLAIMED` y devuelve código de 6 dígitos + QR de anfitrión (o reconecta a sala existente).
 * `host:claim_room` `{ roomCode, hostToken? }` → El anfitrión vincula la TV mediante el QR o los 6 dígitos y recibe control de la sala.
-* `host:update_config` `{ roomCode, config }` → Cambia nombre de partida, pack, nº preguntas, avance auto/manual y late join.
+* `host:update_config` `{ roomCode, config }` → Cambia nombre de partida, pack, nº preguntas, factor multiplicador de tiempo (`timeMultiplier`), avance auto/manual y late join.
 * `host:start_game` `{ roomCode }` → Inicia la partida desde `LOBBY`.
-* `host:next_step` `{ roomCode }` → Avanza manualmente de `REVEAL` → `LEADERBOARD` → siguiente pregunta.
+* `host:end_timer` `{ roomCode }` → Finaliza el reloj inmediatamente pasando de `QUESTION_ACTIVE` a `TIME_UP`.
+* `host:reveal_answer` `{ roomCode }` → Muestra la solución, explicación detallada y curiosidades (`TIME_UP` → `REVEAL`).
+* `host:show_results` `{ roomCode }` → Muestra la clasificación parcial o podio final (`REVEAL` → `LEADERBOARD` / `FINISHED`).
+* `host:next_step` `{ roomCode }` → Avanza al siguiente paso lógico (desde `LEADERBOARD` a la siguiente pregunta).
 * `host:pause_toggle` `{ roomCode }` → Pausa o reanuda el temporizador.
 * `host:kick_team` `{ roomCode, teamId }` → Expulsa a un equipo del lobby o partida.
 * `host:tv_audio` `{ roomCode, muted, volume }` → Controla el audio de la TV.
-* `player:join` `{ roomCode, teamName, members?, createTeam?, sessionToken? }` → Crea un equipo (con lista opcional de jugadores) o se une a uno existente; reconecta si trae `sessionToken`.
+* `player:join` `{ roomCode, teamName, members?, color?, icon?, createTeam?, sessionToken? }` → Crea un equipo (con lista opcional de jugadores, color de píldora e icono) o se une a uno existente; reconecta si trae `sessionToken`.
 * `player:selection_changed` `{ roomCode, questionId, selectedOptionIds }` → (Solo en `multiple_choice`) Sincroniza en servidor las opciones marcadas por si se agota el tiempo sin pulsar Confirmar.
-* `player:answer` `{ roomCode, questionId, selectedOptionIds }` → Envía y bloquea la respuesta del equipo (solo se acepta la primera recibida por equipo).
+* `player:answer` `{ roomCode, questionId, selectedOptionIds, confirm? }` → Registra o actualiza la selección del equipo (el tiempo registrado coincide con la última selección). Si `confirm: true`, bloquea la respuesta del equipo; cuando todos confirman, finaliza el tiempo.
 
 ### Servidor → Clientes
-* `room:state` → Snapshot completo del estado actual (adaptado al rol: sin `correctOptionIds` durante `QUESTION_ACTIVE`).
+* `room:state` → Snapshot completo del estado actual adaptado al rol (sin `correctOptionIds` ni `optionPicks` durante `QUESTION_ACTIVE`; en `TIME_UP` y `REVEAL` la TV recibe `game.optionPicks` con los equipos que eligieron cada opción).
 * `room:teams_updated` → Lista de equipos conectados y sus integrantes.
 * `game:question_intro` `{ index, total, category, type }` → Aviso previo de pregunta.
 * `game:question_start` `{ question, endsAt }` → Pregunta activa y timestamp UTC de fin.
-* `game:answer_ack` `{ accepted, lockedByTeam, reason? }` → Confirmación al móvil (y bloqueo al resto de móviles del mismo equipo).
-* `game:reveal` `{ correctOptionIds, explanation, revealImage, revealAudio, roundScores }` → Resultados de la ronda.
+* `game:time_up` `{ questionId, answeredCount }` → Aviso de tiempo agotado (la TV mantiene la pregunta sin revelar solución hasta que el moderador la muestre).
+* `game:answer_ack` `{ accepted, lockedByTeam, selectedOptionIds }` → Confirmación al móvil y sincronización del botón activado entre los dispositivos del equipo.
+* `game:reveal` `{ correctOptionIds, explanation, extraFact, revealImages, roundScores }` → Resultados de la ronda.
 * `game:leaderboard` `{ standings, isFinal }` → Clasificación actualizada (respetando empates en la misma posición).
 * `game:finished` `{ podium, standings, stats }` → Podio y estadísticas finales.
 * `tv:audio_settings` `{ muted, volume }` → Orden de volumen/mute hacia la TV.

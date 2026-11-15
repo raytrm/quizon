@@ -42,6 +42,7 @@ export class RoomManager {
         title: 'Noche de QUIZÓN',
         packId: 'all',
         questionCount: 10,
+        timeMultiplier: 1.0,
         autoAdvance: false,
         lateJoin: true,
       },
@@ -124,7 +125,11 @@ export class RoomManager {
    * Une un móvil a un equipo existente, crea uno nuevo con lista de integrantes,
    * o reconecta mediante sessionToken.
    */
-  joinTeam(code, socketId, { teamName, members = [], createTeam = true, sessionToken = null }) {
+  joinTeam(
+    code,
+    socketId,
+    { teamName, members = [], color = null, icon = null, createTeam = true, sessionToken = null }
+  ) {
     const room = this.getRoom(code);
     if (!room) {
       return { error: 'ROOM_NOT_FOUND', message: 'Código de sala no encontrado.' };
@@ -165,12 +170,19 @@ export class RoomManager {
         .map((m) => String(m || '').trim())
         .filter(Boolean);
 
+      const safeColor = /^#[0-9a-fA-F]{6}$/.test(String(color || '').trim())
+        ? String(color).trim()
+        : '#6366f1';
+      const safeIcon = String(icon || '').trim().slice(0, 8) || '🎯';
+
       const teamId = uuidv4();
       const newToken = uuidv4();
       const team = {
         id: teamId,
         name: cleanName,
         members: cleanMembers,
+        color: safeColor,
+        icon: safeIcon,
         score: 0,
         streak: 0,
         bestStreak: 0,
@@ -252,6 +264,8 @@ export class RoomManager {
       id: t.id,
       name: t.name,
       members: t.members,
+      color: t.color || '#6366f1',
+      icon: t.icon || '🎯',
       score: t.score,
       streak: t.streak,
       bestStreak: t.bestStreak,

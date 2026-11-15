@@ -49,6 +49,14 @@
           <label for="input-team-members">Integrantes (opcional, separados por coma)</label>
           <input id="input-team-members" type="text" placeholder="Ej. Ana, Luis, Carlos" />
         </div>
+        <div style="margin-bottom: 0.9rem;">
+          <label>Color de la píldora</label>
+          <div id="team-color-picker" class="picker-row"></div>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label>Icono del equipo</label>
+          <div id="team-icon-picker" class="picker-row"></div>
+        </div>
       </div>
 
       <div id="panel-join-team" class="hidden" style="margin-bottom: 1rem;">
@@ -73,8 +81,8 @@
       <div class="player-timer-pill">⏱️ <span id="p-timer-seconds">20</span> s</div>
       <p id="p-question-hint" style="text-align: center; color: var(--text-muted); font-size: 0.95rem;"></p>
       <div id="p-options-list" class="player-options"></div>
-      <button id="btn-confirm-multi" class="btn btn-success btn-lg hidden" type="button">
-        Confirmar respuesta
+      <button id="btn-confirm-answer" class="btn btn-success btn-lg hidden" type="button">
+        🔒 Enviar respuesta definitiva
       </button>
     </section>
 

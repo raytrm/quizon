@@ -8,6 +8,7 @@ const STORAGE_KEY = 'quizon_host_session';
 let hostSession = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
 let currentRoomCode = null;
 let currentHostToken = null;
+let currentRoomState = null;
 let tvMuted = false;
 
 const viewClaim = document.getElementById('h-view-claim');
@@ -17,6 +18,12 @@ const audioCard = document.getElementById('h-audio-card');
 
 const inputCode = document.getElementById('host-input-code');
 const cfgPack = document.getElementById('cfg-pack');
+const cfgTimeMult = document.getElementById('cfg-time-mult');
+const cfgTimeMultLabel = document.getElementById('cfg-time-mult-label');
+
+cfgTimeMult.addEventListener('input', () => {
+  cfgTimeMultLabel.textContent = `${Number(cfgTimeMult.value).toFixed(2).replace(/\.00$/, '.0')}x`;
+});
 
 function populatePacks(packs) {
   cfgPack.innerHTML = packs
@@ -33,34 +40,32 @@ document.getElementById('btn-claim-room').addEventListener('click', () => {
   socket.emit('host:claim_room', { roomCode: code });
 });
 
+function getConfigPayload() {
+  return {
+    title: document.getElementById('cfg-title').value,
+    packId: cfgPack.value,
+    questionCount: Number(document.getElementById('cfg-count').value),
+    timeMultiplier: Number(cfgTimeMult.value),
+    autoAdvance: document.getElementById('cfg-auto').checked,
+    lateJoin: document.getElementById('cfg-late').checked,
+  };
+}
+
 document.getElementById('btn-save-config').addEventListener('click', () => {
   if (!currentRoomCode) return;
   socket.emit('host:update_config', {
     roomCode: currentRoomCode,
     hostToken: currentHostToken,
-    config: {
-      title: document.getElementById('cfg-title').value,
-      packId: cfgPack.value,
-      questionCount: Number(document.getElementById('cfg-count').value),
-      autoAdvance: document.getElementById('cfg-auto').checked,
-      lateJoin: document.getElementById('cfg-late').checked,
-    },
+    config: getConfigPayload(),
   });
   showToast('Configuración guardada', 'info', 1800);
 });
 
 document.getElementById('btn-start-game').addEventListener('click', () => {
-  // Guardamos config antes de arrancar
   socket.emit('host:update_config', {
     roomCode: currentRoomCode,
     hostToken: currentHostToken,
-    config: {
-      title: document.getElementById('cfg-title').value,
-      packId: cfgPack.value,
-      questionCount: Number(document.getElementById('cfg-count').value),
-      autoAdvance: document.getElementById('cfg-auto').checked,
-      lateJoin: document.getElementById('cfg-late').checked,
-    },
+    config: getConfigPayload(),
   });
   socket.emit('host:start_game', {
     roomCode: currentRoomCode,
@@ -68,8 +73,21 @@ document.getElementById('btn-start-game').addEventListener('click', () => {
   });
 });
 
+document.getElementById('btn-end-timer').addEventListener('click', () => {
+  socket.emit('host:end_timer', { roomCode: currentRoomCode, hostToken: currentHostToken });
+});
+
+document.getElementById('btn-reveal-answer').addEventListener('click', () => {
+  socket.emit('host:reveal_answer', { roomCode: currentRoomCode, hostToken: currentHostToken });
+});
+
+document.getElementById('btn-show-results').addEventListener('click', () => {
+  socket.emit('host:show_results', { roomCode: currentRoomCode, hostToken: currentHostToken });
+});
+
 document.getElementById('btn-next-step').addEventListener('click', () => {
-  socket.emit('host:next_step', { roomCode: currentRoomCode, hostToken: currentHostToken });
+  const eventName = currentRoomState === 'REVEAL' ? 'host:next_question' : 'host:next_step';
+  socket.emit(eventName, { roomCode: currentRoomCode, hostToken: currentHostToken });
 });
 
 document.getElementById('btn-pause-toggle').addEventListener('click', () => {
@@ -182,9 +200,20 @@ socket.on('room:state', (state) => {
       ? '▶️ Reanudar'
       : '⏸️ Pausar';
 
+    currentRoomState = state.state;
     const isFinished = state.state === 'FINISHED';
+    const hasMoreQuestions = state.game.index < state.game.total;
+    document.getElementById('btn-end-timer').classList.toggle('hidden', state.state !== 'QUESTION_ACTIVE');
+    document.getElementById('btn-reveal-answer').classList.toggle('hidden', state.state !== 'TIME_UP');
+    document.getElementById('btn-show-results').classList.toggle('hidden', state.state !== 'REVEAL');
+    document
+      .getElementById('btn-next-step')
+      .classList.toggle('hidden', state.state !== 'LEADERBOARD' && !(state.state === 'REVEAL' && hasMoreQuestions));
     document.getElementById('btn-play-again').classList.toggle('hidden', !isFinished);
-    document.getElementById('btn-next-step').classList.toggle('hidden', isFinished);
+    document.getElementById('btn-pause-toggle').classList.toggle(
+      'hidden',
+      state.state !== 'QUESTION_ACTIVE' && state.state !== 'LEADERBOARD'
+    );
   }
 });
 

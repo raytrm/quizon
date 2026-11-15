@@ -16,7 +16,12 @@
       <strong style="font-size: 1.3rem;">🎛️ QUIZ<span style="color: var(--gold);">ÓN</span> Anfitrión</strong>
       <div id="host-room-label" style="font-size: 0.85rem; color: var(--text-muted);">Sin sala vinculada</div>
     </div>
-    <span id="host-state-badge" class="badge">Desconectado</span>
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <a href="/admin" target="_blank" rel="noopener" class="btn btn-ghost" style="padding: 0.4rem 0.75rem; font-size: 0.85rem;">
+        🛠️ Editor
+      </a>
+      <span id="host-state-badge" class="badge">Desconectado</span>
+    </div>
   </header>
 
   <!-- VINCULAR TV -->
@@ -47,6 +52,10 @@
       <div class="form-group">
         <label for="cfg-count">Número de preguntas</label>
         <input id="cfg-count" type="number" min="1" max="50" value="10" />
+      </div>
+      <div class="form-group">
+        <label for="cfg-time-mult">Factor multiplicador de tiempo: <strong id="cfg-time-mult-label" style="color: var(--gold);">1.0x</strong></label>
+        <input id="cfg-time-mult" type="range" min="0.5" max="3" step="0.25" value="1" />
       </div>
       <div class="checkbox-row">
         <input id="cfg-auto" type="checkbox" />
@@ -80,8 +89,17 @@
     </div>
 
     <div class="host-controls-grid">
-      <button id="btn-next-step" class="btn btn-success" type="button" style="grid-column: span 2;">
-        ⏭️ Siguiente paso
+      <button id="btn-end-timer" class="btn btn-danger hidden" type="button" style="grid-column: span 2;">
+        ⏹️ Finalizar tiempo
+      </button>
+      <button id="btn-reveal-answer" class="btn btn-success hidden" type="button" style="grid-column: span 2;">
+        💡 Mostrar solución
+      </button>
+      <button id="btn-show-results" class="btn btn-success hidden" type="button" style="grid-column: span 2;">
+        📊 Ver resultados
+      </button>
+      <button id="btn-next-step" class="btn btn-success hidden" type="button" style="grid-column: span 2;">
+        ⏭️ Siguiente pregunta
       </button>
       <button id="btn-pause-toggle" class="btn btn-warning" type="button">⏸️ Pausar</button>
       <button id="btn-finish-now" class="btn btn-danger" type="button">🏁 Finalizar</button>

@@ -1,9 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveQuestionMedia } from './media-scanner.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_QUESTIONS_PATH = path.resolve(__dirname, '../data/questions.json');
+const DEFAULT_IMAGES_DIR = path.resolve(__dirname, '../data/images');
 
 const VALID_TYPES = new Set([
   'single_choice',
@@ -13,12 +15,17 @@ const VALID_TYPES = new Set([
   'lightning',
 ]);
 
+const CATALOG_ID_RE = /^\d{6}$/;
+const QUESTION_ID_RE = /^\d{5}$/;
+
 /**
  * Carga y gestiona el banco de preguntas desde JSON.
  */
 export class QuestionStore {
-  constructor(filePath = DEFAULT_QUESTIONS_PATH) {
+  constructor(filePath = DEFAULT_QUESTIONS_PATH, imagesDir = DEFAULT_IMAGES_DIR) {
     this.filePath = filePath;
+    this.imagesDir = imagesDir;
+    this.catalogId = '000001';
     this.packs = [];
     this.reload();
   }
@@ -33,6 +40,10 @@ export class QuestionStore {
     if (!parsed || !Array.isArray(parsed.packs)) {
       throw new Error('Formato inválido en questions.json: falta el array "packs".');
     }
+    if (!CATALOG_ID_RE.test(String(parsed.catalogId || ''))) {
+      throw new Error('Formato inválido en questions.json: "catalogId" debe tener 6 dígitos (ej. "000001").');
+    }
+    this.catalogId = String(parsed.catalogId);
 
     for (const pack of parsed.packs) {
       if (!pack.id || !pack.title || !Array.isArray(pack.questions)) {
@@ -40,6 +51,7 @@ export class QuestionStore {
       }
       for (const q of pack.questions) {
         this.#validateQuestion(q);
+        q.resolvedMedia = resolveQuestionMedia(this.imagesDir, this.catalogId, q.id);
       }
     }
 
@@ -47,8 +59,8 @@ export class QuestionStore {
   }
 
   #validateQuestion(q) {
-    if (!q.id || !q.prompt) {
-      throw new Error(`Pregunta sin id o enunciado: ${JSON.stringify(q)}`);
+    if (!QUESTION_ID_RE.test(String(q.id || '')) || !q.prompt) {
+      throw new Error(`Pregunta con id inválido (debe tener 5 dígitos) o sin enunciado: ${q?.id}`);
     }
     if (!VALID_TYPES.has(q.type)) {
       throw new Error(`Tipo de pregunta inválido "${q.type}" en ${q.id}`);
@@ -113,8 +125,9 @@ export class QuestionStore {
   /**
    * Elimina respuestas correctas y explicaciones antes de enviar la pregunta activa al cliente.
    */
-  static sanitizeForClient(question) {
+  static sanitizeForClient(question, catalogId = '000001') {
     return {
+      catalogId,
       id: question.id,
       type: question.type,
       category: question.category || 'General',
@@ -122,8 +135,8 @@ export class QuestionStore {
       timeLimit: question.timeLimit || 20,
       prompt: question.prompt,
       media: {
-        questionImage: question.media?.questionImage || null,
-        questionAudio: question.media?.questionAudio || null,
+        bg: question.resolvedMedia?.bg || [],
+        clue: question.resolvedMedia?.clue || [],
       },
       options: question.options.map((o) => ({ id: o.id, text: o.text })),
     };

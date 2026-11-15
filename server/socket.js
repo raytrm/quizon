@@ -49,14 +49,45 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
     const standings = buildStandings(room.teams.values());
 
     let questionPayload = null;
-    if (currentQ && (room.state === 'QUESTION_ACTIVE' || room.state === 'REVEAL')) {
-      questionPayload = QuestionStore.sanitizeForClient(currentQ);
+    if (
+      currentQ &&
+      (room.state === 'QUESTION_ACTIVE' || room.state === 'TIME_UP' || room.state === 'REVEAL')
+    ) {
+      questionPayload = QuestionStore.sanitizeForClient(currentQ, questionStore.catalogId);
+      if (g.effectiveTimeLimit) {
+        questionPayload.timeLimit = g.effectiveTimeLimit;
+      }
       if (room.state === 'REVEAL') {
         questionPayload.correctOptionIds = currentQ.correctOptionIds;
         questionPayload.explanation = currentQ.explanation || '';
         questionPayload.extraFact = currentQ.extraFact || null;
-        questionPayload.media.revealImage = currentQ.media?.revealImage || null;
-        questionPayload.media.revealAudio = currentQ.media?.revealAudio || null;
+        questionPayload.media.explain = currentQ.resolvedMedia?.explain || [];
+      }
+    }
+
+    let optionPicks = null;
+    if (
+      currentQ &&
+      (room.state === 'TIME_UP' || room.state === 'REVEAL') &&
+      (role === 'tv' || role === 'host')
+    ) {
+      optionPicks = {};
+      for (const opt of currentQ.options) {
+        optionPicks[opt.id] = [];
+      }
+      for (const [tId, ans] of g.roundAnswers.entries()) {
+        const team = room.teams.get(tId);
+        if (!team) continue;
+        for (const optId of ans.selectedOptionIds || []) {
+          if (optionPicks[optId]) {
+            optionPicks[optId].push({
+              id: team.id,
+              name: team.name,
+              color: team.color || '#6366f1',
+              icon: team.icon || '🎯',
+            });
+          }
+        }
       }
     }
 
@@ -70,9 +101,13 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
           id: team.id,
           name: team.name,
           members: team.members,
+          color: team.color || '#6366f1',
+          icon: team.icon || '🎯',
           score: team.score,
           rank: standing?.rank || null,
           answeredThisRound: Boolean(ans),
+          lockedThisRound: Boolean(ans?.locked),
+          selectedOptionIds: ans?.selectedOptionIds || [],
           lastRoundPoints: ans?.points ?? null,
           lastRoundCorrect: ans?.isCorrect ?? null,
         };
@@ -96,6 +131,7 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
             endsAt: g.endsAt,
             answeredCount: g.roundAnswers.size,
             question: questionPayload,
+            optionPicks,
             questionType: currentQ?.type || null,
             questionCategory: currentQ?.category || null,
           }
@@ -176,6 +212,10 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
         title: String(config?.title || room.config.title).trim().slice(0, 50) || 'Noche de QUIZÓN',
         packId: config?.packId || room.config.packId,
         questionCount: Math.max(1, Math.min(50, Number(config?.questionCount) || room.config.questionCount)),
+        timeMultiplier: Math.max(
+          0.5,
+          Math.min(3.0, Number(config?.timeMultiplier ?? room.config.timeMultiplier) || 1.0)
+        ),
         autoAdvance: Boolean(config?.autoAdvance),
         lateJoin: config?.lateJoin !== undefined ? Boolean(config.lateJoin) : room.config.lateJoin,
       };
@@ -196,11 +236,35 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
       }
     });
 
-    // 5. Anfitrión avanza paso
+    // 5. Anfitrión avanza paso / controles explícitos de tiempo, solución y resultados
     socket.on('host:next_step', ({ roomCode, hostToken } = {}) => {
       const room = roomManager.getRoom(roomCode);
       if (!roomManager.validateHost(room, hostToken)) return;
       getOrCreateEngine(room).nextStep();
+    });
+
+    socket.on('host:end_timer', ({ roomCode, hostToken } = {}) => {
+      const room = roomManager.getRoom(roomCode);
+      if (!roomManager.validateHost(room, hostToken)) return;
+      getOrCreateEngine(room).endTimerNow();
+    });
+
+    socket.on('host:reveal_answer', ({ roomCode, hostToken } = {}) => {
+      const room = roomManager.getRoom(roomCode);
+      if (!roomManager.validateHost(room, hostToken)) return;
+      getOrCreateEngine(room).revealAnswer();
+    });
+
+    socket.on('host:show_results', ({ roomCode, hostToken } = {}) => {
+      const room = roomManager.getRoom(roomCode);
+      if (!roomManager.validateHost(room, hostToken)) return;
+      getOrCreateEngine(room).showResults();
+    });
+
+    socket.on('host:next_question', ({ roomCode, hostToken } = {}) => {
+      const room = roomManager.getRoom(roomCode);
+      if (!roomManager.validateHost(room, hostToken)) return;
+      getOrCreateEngine(room).skipToNextQuestion();
     });
 
     // 6. Anfitrión pausa/reanuda
@@ -283,6 +347,8 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
         teamId: team.id,
         teamName: team.name,
         members: team.members,
+        color: team.color,
+        icon: team.icon,
         sessionToken,
         reconnected,
       });
@@ -300,13 +366,15 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
       getOrCreateEngine(room).updateDraftSelection(info.teamId, questionId, selectedOptionIds);
     });
 
-    // 13. Envío de respuesta oficial del equipo
-    socket.on('player:answer', ({ roomCode, questionId, selectedOptionIds } = {}) => {
+    // 13. Envío de respuesta oficial del equipo (con confirmación opcional)
+    socket.on('player:answer', ({ roomCode, questionId, selectedOptionIds, confirm } = {}) => {
       const info = roomManager.socketIndex.get(socket.id);
       if (!info || info.role !== 'player' || info.roomCode !== roomCode) return;
       const room = roomManager.getRoom(roomCode);
       if (!room) return;
-      getOrCreateEngine(room).submitAnswer(info.teamId, socket.id, questionId, selectedOptionIds);
+      getOrCreateEngine(room).submitAnswer(info.teamId, socket.id, questionId, selectedOptionIds, {
+        confirm: Boolean(confirm),
+      });
     });
 
     // 14. Desconexión

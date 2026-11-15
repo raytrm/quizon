@@ -115,3 +115,44 @@ body.player-body {
   margin-bottom: 0.5rem;
 }
 
+.picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.color-swatch.active {
+  border-color: #ffffff;
+  transform: scale(1.12);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.icon-swatch {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 2px solid var(--border-subtle);
+  background: rgba(15, 23, 42, 0.7);
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.icon-swatch.active {
+  border-color: var(--gold);
+  background: rgba(251, 191, 36, 0.2);
+  transform: scale(1.08);
+}
+

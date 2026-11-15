@@ -61,6 +61,8 @@ export function buildStandings(teams) {
       id: t.id,
       name: t.name,
       members: t.members || [],
+      color: t.color || '#6366f1',
+      icon: t.icon || '🎯',
       score: t.score || 0,
       streak: t.streak || 0,
       bestStreak: t.bestStreak || 0,
@@ -182,14 +184,20 @@ export class GameEngine {
     if (!q) return;
 
     this.room.state = 'QUESTION_ACTIVE';
-    const totalMs = (q.timeLimit || 20) * 1000;
+    const multiplier = Math.max(0.5, Math.min(3.0, Number(this.room.config.timeMultiplier) || 1));
+    const effectiveSeconds = Math.max(3, Math.round((q.timeLimit || 20) * multiplier));
+    const totalMs = effectiveSeconds * 1000;
     const now = Date.now();
     g.startedAt = now;
     g.totalMs = totalMs;
+    g.effectiveTimeLimit = effectiveSeconds;
     g.endsAt = now + totalMs;
 
+    const sanitized = QuestionStore.sanitizeForClient(q);
+    sanitized.timeLimit = effectiveSeconds;
+
     this.emitRoom('game:question_start', {
-      question: QuestionStore.sanitizeForClient(q),
+      question: sanitized,
       index: g.currentIndex + 1,
       total: g.questions.length,
       endsAt: g.endsAt,
@@ -197,7 +205,7 @@ export class GameEngine {
     this.#broadcastState();
 
     this.timer = setTimeout(() => {
-      this.#revealRound();
+      this.#endQuestionTime();
     }, totalMs);
   }
 
@@ -214,9 +222,11 @@ export class GameEngine {
   }
 
   /**
-   * Registra la respuesta oficial del equipo (solo se acepta la primera por equipo).
+   * Registra o actualiza la respuesta del equipo durante QUESTION_ACTIVE.
+   * El tiempo registrado coincide con la última selección realizada.
+   * Si `confirm` es true, bloquea la respuesta del equipo; si todos confirman, finaliza el tiempo.
    */
-  submitAnswer(teamId, socketId, questionId, selectedOptionIds) {
+  submitAnswer(teamId, socketId, questionId, selectedOptionIds, { confirm = false } = {}) {
     if (this.room.state !== 'QUESTION_ACTIVE') {
       return { accepted: false, reason: 'QUESTION_NOT_ACTIVE' };
     }
@@ -229,12 +239,12 @@ export class GameEngine {
       return { accepted: false, reason: 'INVALID_QUESTION' };
     }
 
-    // Regla: solo se acepta la primera respuesta por equipo
-    if (g.roundAnswers.has(teamId)) {
+    const existing = g.roundAnswers.get(teamId);
+    if (existing?.locked) {
       this.emitSocket(socketId, 'game:answer_ack', {
         accepted: false,
         lockedByTeam: true,
-        reason: 'Tu equipo ya ha enviado su respuesta para esta pregunta.',
+        selectedOptionIds: existing.selectedOptionIds,
       });
       return { accepted: false, lockedByTeam: true };
     }
@@ -244,53 +254,75 @@ export class GameEngine {
     const responseMs = Math.max(0, now - g.startedAt);
     const cleanSelected = Array.from(new Set(selectedOptionIds || []));
 
-    const result = calculateQuestionScore(q, cleanSelected, remainingMs, g.totalMs);
-    g.roundAnswers.set(teamId, {
-      selectedOptionIds: cleanSelected,
-      responseMs,
-      points: result.points,
-      isCorrect: result.isCorrect,
-      ratio: result.ratio,
-      locked: true,
-    });
+    if (cleanSelected.length === 0) {
+      g.roundAnswers.delete(teamId);
+    } else {
+      const result = calculateQuestionScore(q, cleanSelected, remainingMs, g.totalMs);
+      g.roundAnswers.set(teamId, {
+        selectedOptionIds: cleanSelected,
+        responseMs,
+        points: result.points,
+        isCorrect: result.isCorrect,
+        ratio: result.ratio,
+        locked: Boolean(confirm),
+      });
+    }
 
-    // Notificar a todos los dispositivos del equipo para bloquearlos
+    const isLocked = Boolean(confirm && cleanSelected.length > 0);
+
+    // Sincronizar la selección activa (y bloqueo si confirmó) con todos los dispositivos del equipo
     const team = this.room.teams.get(teamId);
     if (team) {
       for (const sid of team.sockets) {
         this.emitSocket(sid, 'game:answer_ack', {
-          accepted: sid === socketId,
-          lockedByTeam: true,
+          accepted: true,
+          lockedByTeam: isLocked,
           selectedOptionIds: cleanSelected,
         });
       }
     }
 
-    // Comprobar si todos los equipos conectados ya han respondido
+    // Si todos los equipos conectados han confirmado su respuesta definitiva, finaliza el tiempo
     const connectedTeams = Array.from(this.room.teams.values()).filter((t) => t.connected);
-    const allAnswered =
+    const allConfirmed =
       connectedTeams.length > 0 &&
-      connectedTeams.every((t) => g.roundAnswers.has(t.id));
+      connectedTeams.every((t) => g.roundAnswers.get(t.id)?.locked === true);
 
-    if (allAnswered) {
-      this.#revealRound();
+    if (allConfirmed) {
+      this.#endQuestionTime();
     } else {
       this.#broadcastState();
     }
 
-    return { accepted: true, points: result.points };
+    const saved = g.roundAnswers.get(teamId);
+    return {
+      accepted: true,
+      lockedByTeam: isLocked,
+      points: saved?.points || 0,
+      selectedOptionIds: cleanSelected,
+    };
   }
 
-  #revealRound() {
+  /**
+   * Finaliza el tiempo de respuesta y pasa a estado TIME_UP (sin revelar aún la solución).
+   */
+  endTimerNow() {
+    if (this.room.state !== 'QUESTION_ACTIVE') return false;
+    this.#endQuestionTime();
+    return true;
+  }
+
+  #endQuestionTime() {
     this.clearTimer();
     const g = this.room.game;
     const q = this.#currentQuestion();
     if (!q) return;
 
-    this.room.state = 'REVEAL';
+    this.room.state = 'TIME_UP';
     g.endsAt = null;
+    g.paused = false;
 
-    // Evaluar borradores pendientes en multiple_choice si el tiempo expiró sin confirmar
+    // Congelar borradores pendientes en multiple_choice si el tiempo expiró sin confirmar
     if (q.type === 'multiple_choice') {
       for (const [teamId, draft] of g.draftSelections.entries()) {
         if (!g.roundAnswers.has(teamId) && draft.length > 0) {
@@ -307,6 +339,40 @@ export class GameEngine {
         }
       }
     }
+
+    this.emitRoom('game:time_up', {
+      questionId: q.id,
+      answeredCount: g.roundAnswers.size,
+    });
+    this.#broadcastState();
+
+    if (this.room.config.autoAdvance) {
+      this.timer = setTimeout(() => {
+        this.revealAnswer();
+      }, 2500);
+    }
+  }
+
+  /**
+   * El moderador muestra la solución y explicación en pantalla (TIME_UP -> REVEAL).
+   */
+  revealAnswer() {
+    if (this.room.state !== 'TIME_UP' && this.room.state !== 'QUESTION_ACTIVE') return false;
+    if (this.room.state === 'QUESTION_ACTIVE') {
+      this.#endQuestionTime();
+    }
+    this.#revealRound();
+    return true;
+  }
+
+  #revealRound() {
+    this.clearTimer();
+    const g = this.room.game;
+    const q = this.#currentQuestion();
+    if (!q) return;
+
+    this.room.state = 'REVEAL';
+    g.endsAt = null;
 
     let roundCorrectCount = 0;
     const roundScores = [];
@@ -357,49 +423,63 @@ export class GameEngine {
       correctOptionIds: q.correctOptionIds,
       explanation: q.explanation || '',
       extraFact: q.extraFact || null,
-      revealImage: q.media?.revealImage || null,
-      revealAudio: q.media?.revealAudio || null,
+      revealImages: q.resolvedMedia?.explain || [],
       roundScores,
     });
     this.#broadcastState();
 
     if (this.room.config.autoAdvance) {
       this.timer = setTimeout(() => {
-        this.nextStep();
+        this.showResults();
       }, 8000);
     }
   }
 
   /**
-   * Avanza manualmente o por auto-avance: REVEAL -> LEADERBOARD -> siguiente pregunta o FINISHED.
+   * El moderador muestra los resultados/clasificación (REVEAL -> LEADERBOARD o FINISHED).
+   */
+  showResults() {
+    if (this.room.state !== 'REVEAL') return false;
+    this.clearTimer();
+    const g = this.room.game;
+    const isLast = g.currentIndex >= g.questions.length - 1;
+    if (isLast) {
+      this.#finishGame();
+      return true;
+    }
+
+    this.room.state = 'LEADERBOARD';
+    const standings = buildStandings(this.room.teams.values());
+    this.emitRoom('game:leaderboard', { standings, isFinal: false });
+    this.#broadcastState();
+
+    if (this.room.config.autoAdvance) {
+      this.timer = setTimeout(() => {
+        this.nextStep();
+      }, 5000);
+    }
+    return true;
+  }
+
+  /**
+   * Avanza al siguiente paso lógico según el estado actual.
    */
   nextStep() {
     if (!this.room.game) return;
     this.clearTimer();
 
     if (this.room.state === 'QUESTION_ACTIVE') {
+      this.#endQuestionTime();
+      return;
+    }
+
+    if (this.room.state === 'TIME_UP') {
       this.#revealRound();
       return;
     }
 
     if (this.room.state === 'REVEAL') {
-      const g = this.room.game;
-      const isLast = g.currentIndex >= g.questions.length - 1;
-      if (isLast) {
-        this.#finishGame();
-        return;
-      }
-
-      this.room.state = 'LEADERBOARD';
-      const standings = buildStandings(this.room.teams.values());
-      this.emitRoom('game:leaderboard', { standings, isFinal: false });
-      this.#broadcastState();
-
-      if (this.room.config.autoAdvance) {
-        this.timer = setTimeout(() => {
-          this.nextStep();
-        }, 5000);
-      }
+      this.showResults();
       return;
     }
 
@@ -407,6 +487,23 @@ export class GameEngine {
       this.room.game.currentIndex += 1;
       this.#startQuestionIntro();
     }
+  }
+
+  /**
+   * Salta la clasificación intermedia y avanza directamente a la siguiente pregunta (o finaliza si era la última).
+   */
+  skipToNextQuestion() {
+    if (!this.room.game) return false;
+    if (this.room.state !== 'REVEAL' && this.room.state !== 'LEADERBOARD') return false;
+    this.clearTimer();
+    const g = this.room.game;
+    if (g.currentIndex >= g.questions.length - 1) {
+      this.#finishGame();
+      return true;
+    }
+    g.currentIndex += 1;
+    this.#startQuestionIntro();
+    return true;
   }
 
   /**
@@ -436,7 +533,7 @@ export class GameEngine {
     if (targetState === 'QUESTION_ACTIVE') {
       const rem = Math.max(1000, g.remainingMsOnPause || 1000);
       g.endsAt = Date.now() + rem;
-      this.timer = setTimeout(() => this.#revealRound(), rem);
+      this.timer = setTimeout(() => this.#endQuestionTime(), rem);
     } else if (targetState === 'LEADERBOARD' && this.room.config.autoAdvance) {
       this.timer = setTimeout(() => this.nextStep(), 4000);
     }
@@ -517,4 +614,3 @@ export class GameEngine {
     this.emitRoom('room:state_refresh', null);
   }
 }
-
