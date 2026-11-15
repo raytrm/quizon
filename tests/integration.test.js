@@ -40,6 +40,8 @@ describe('Integración End-to-End (HTTP + Socket.IO)', () => {
     assert.equal(media.bg.length, 3);
     assert.ok(Array.isArray(media.clue));
     assert.equal(media.explain.length, 2);
+    assert.equal(media.audio.bg.length, 1);
+    assert.match(media.audio.bg[0].name, /lemmings-opening\.mp3$/);
     assert.match(media.bg[0].name, /^01_/);
     assert.match(media.bg[2].name, /^03_/);
 

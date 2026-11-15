@@ -137,6 +137,10 @@ export class QuestionStore {
       media: {
         bg: question.resolvedMedia?.bg || [],
         clue: question.resolvedMedia?.clue || [],
+        audio: {
+          bg: question.resolvedMedia?.audio?.bg || [],
+          clue: question.resolvedMedia?.audio?.clue || [],
+        },
       },
       options: question.options.map((o) => ({ id: o.id, text: o.text })),
     };

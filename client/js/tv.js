@@ -473,18 +473,31 @@ socket.on('game:question_intro', (info) => {
   }
 });
 
-socket.on('game:question_start', () => {
-  audio.startQuestionBed();
+socket.on('game:question_start', (data) => {
+  const clueAudio = data?.question?.media?.audio?.clue?.[0]?.url;
+  const bgAudio = data?.question?.media?.audio?.bg?.[0]?.url;
+  if (clueAudio) {
+    audio.playMediaUrl(clueAudio, { loop: false, fadeInSec: 0.5 });
+  } else if (bgAudio) {
+    audio.playMediaUrl(bgAudio, { loop: true, targetVolume: 0.05, fadeInSec: 2.0 });
+  } else {
+    audio.startQuestionBed();
+  }
 });
 
 socket.on('game:time_up', () => {
-  audio.stopLoop();
+  audio.stopLoop({ fadeOutSec: 2.0 });
   audio.playTick();
 });
 
-socket.on('game:reveal', () => {
+socket.on('game:reveal', (data) => {
   audio.stopLoop();
-  audio.playReveal();
+  const explainAudio = data?.revealAudio?.[0]?.url;
+  if (explainAudio) {
+    audio.playMediaUrl(explainAudio, { loop: false });
+  } else {
+    audio.playReveal();
+  }
 });
 
 socket.on('game:finished', ({ podium, standings, stats }) => {

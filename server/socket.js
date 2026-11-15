@@ -62,6 +62,7 @@ export function registerSocketHandlers(io, roomManager, questionStore, getBaseUr
         questionPayload.explanation = currentQ.explanation || '';
         questionPayload.extraFact = currentQ.extraFact || null;
         questionPayload.media.explain = currentQ.resolvedMedia?.explain || [];
+        questionPayload.media.audio.explain = currentQ.resolvedMedia?.audio?.explain || [];
       }
     }
 

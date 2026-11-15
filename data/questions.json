@@ -70,7 +70,7 @@
           "category": "Ciencia y Salud",
           "difficulty": "easy",
           "timeLimit": 20,
-          "prompt": "Hay palabras médicas que parecen inventadas por alguien con mucho sentido del humor. Una de ellas es «diverticulitis». ¿Sabes qué significa realmente?",
+          "prompt": "Hay palabras un tanto curiosas. Una de ellas es «diverticulitis». ¿Sabes qué significa realmente?",
           "options": [
             {
               "id": "a",
@@ -83,6 +83,10 @@
             {
               "id": "c",
               "text": "Es una enfermedad que consiste en la inflamación o infección de unos pequeños sacos que pueden formarse en las paredes del intestino grueso."
+            },
+            {
+              "id": "d",
+              "text": "Es una dolencia que consiste en la inflamación crónica de los gluteos."
             }
           ],
           "correctOptionIds": [
@@ -101,15 +105,19 @@
           "options": [
             {
               "id": "a",
-              "text": "Se disuelve por completo, porque la bebida puede destruir el esmalte dental."
+              "text": "Se disuelve por completo, la bebida destruye el esmalte dental."
             },
             {
               "id": "b",
-              "text": "Se oscurece y puede sufrir cierta erosión superficial, pero no desaparece."
+              "text": "Se oscurece y sufre cierta erosión superficial."
             },
             {
               "id": "c",
-              "text": "Se convierte en una especie de goma blanda que se puede doblar."
+              "text": "Se convierte en una especie de goma blanda similar a un borrador."
+            },
+            {
+              "id": "d",
+              "text": "No le pasa nada al diente."
             }
           ],
           "correctOptionIds": [
@@ -124,19 +132,23 @@
           "category": "Leyendas Urbanas",
           "difficulty": "easy",
           "timeLimit": 20,
-          "prompt": "¿Es verdad que si te tragas un chicle se queda pegado en el estómago durante siete años?",
+          "prompt": "¿Que pasa si te tragas un chicle?",
           "options": [
             {
               "id": "a",
-              "text": "Sí, porque el organismo no puede digerirlo y permanece allí durante años."
+              "text": "El organismo tarda mucho en digerirlo y permanece allí durante años."
             },
             {
               "id": "b",
-              "text": "No, normalmente atraviesa el aparato digestivo y acaba expulsándose."
+              "text": "Atraviesa el aparato digestivo y acaba expulsándose."
             },
             {
               "id": "c",
-              "text": "Sí, pero solo si te tragas más de tres chicles a la semana."
+              "text": "Depende del tamaño, si son varios puede obstruir el intestino."
+            },
+            {
+              "id": "d",
+              "text": "Se puede pegar en las paredes de sistema digestivo."
             }
           ],
           "correctOptionIds": [
@@ -151,7 +163,7 @@
           "category": "Leyendas Urbanas",
           "difficulty": "easy",
           "timeLimit": 20,
-          "prompt": "¿Es cierto que calentar comida en el microondas destruye sus nutrientes y la vuelve radiactiva?",
+          "prompt": "¿Es cierto que calentar comida en el microondas destruye sus nutrientes?",
           "options": [
             {
               "id": "a",
@@ -159,11 +171,15 @@
             },
             {
               "id": "b",
-              "text": "No, no los vuelve radiactivos y puede conservar nutrientes igual o mejor que otros métodos de cocción."
+              "text": "No, conservar nutrientes igual o mejor que otros métodos de cocción."
             },
             {
               "id": "c",
               "text": "Sí, pero únicamente cuando utilizamos recipientes de plástico."
+            },
+            {
+              "id": "d",
+              "text": "No, solo magnetizan los alimentos por la vibración bipolar de la molécula del agua."
             }
           ],
           "correctOptionIds": [
@@ -191,6 +207,10 @@
             {
               "id": "c",
               "text": "La receta fue publicada íntegramente en un periódico estadounidense en 1979, pero la compañía consiguió que nadie la reprodujera comercialmente."
+            },
+            {
+              "id": "d",
+              "text": "La fórmula no es secreta, incluso se comparten los ingredientes con Pepsi Co para diferenciar el sabor dependiendo del pais de comercialización."
             }
           ],
           "correctOptionIds": [

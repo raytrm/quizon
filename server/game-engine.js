@@ -424,6 +424,7 @@ export class GameEngine {
       explanation: q.explanation || '',
       extraFact: q.extraFact || null,
       revealImages: q.resolvedMedia?.explain || [],
+      revealAudio: q.resolvedMedia?.audio?.explain || [],
       roundScores,
     });
     this.#broadcastState();

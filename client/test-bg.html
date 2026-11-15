@@ -217,6 +217,27 @@
 
       <div id="file-label" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem; word-break: break-all;"></div>
 
+      <div style="border-top: 1px solid var(--border-subtle); margin: 0.55rem 0; padding-top: 0.55rem;">
+        <div class="tuner-row">
+          <label>Volumen audio <span id="val-audio-vol">0.05</span></label>
+          <input id="rng-audio-vol" type="range" min="0" max="1" step="0.01" value="0.05" />
+        </div>
+        <div class="tuner-row">
+          <label>Fade-in audio <span id="val-audio-fadein">2.0s</span></label>
+          <input id="rng-audio-fadein" type="range" min="0" max="4" step="0.2" value="2.0" />
+        </div>
+        <div class="tuner-row">
+          <label>Fade-out audio <span id="val-audio-fadeout">2.0s</span></label>
+          <input id="rng-audio-fadeout" type="range" min="0" max="4" step="0.2" value="2.0" />
+        </div>
+        <div id="audio-status" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.35rem; word-break: break-all;"></div>
+        <audio id="bg-audio" controls loop class="hidden" style="width: 100%; height: 32px; margin-bottom: 0.4rem;"></audio>
+        <div id="audio-fade-btns" class="tuner-btns hidden" style="margin-top: 0; margin-bottom: 0.5rem;">
+          <button id="btn-audio-fadein" class="btn btn-ghost" type="button">🔊 Fade-In</button>
+          <button id="btn-audio-fadeout" class="btn btn-ghost" type="button">🔇 Fade-Out</button>
+        </div>
+      </div>
+
       <div class="tuner-btns">
         <button id="btn-pause-loop" class="btn btn-warning" type="button">⏸️ Pausar</button>
         <button id="btn-next-img" class="btn btn-ghost" type="button">⏭️ Siguiente</button>
@@ -233,13 +254,16 @@
 
     const clueBox = document.getElementById('q-clue-box');
     const clueImg = document.getElementById('q-clue-img');
+    const bgAudioEl = document.getElementById('bg-audio');
+    const audioFadeBtns = document.getElementById('audio-fade-btns');
 
-    let mediaData = { bg: [], clue: [], explain: [] };
+    let mediaData = { bg: [], clue: [], explain: [], audio: { bg: [], clue: [], explain: [] } };
     let phase = 'bg';
     let currentIndex = 0;
     let activeLayer = 'a';
     let loopTimer = null;
     let paused = false;
+    let audioFadeRaf = null;
 
     const cfg = {
       intervalMs: 4000,
@@ -248,7 +272,37 @@
       scrim: 0.15,
       blur: 0,
       kenBurns: true,
+      audioVol: 0.05,
+      audioFadeIn: 2.0,
+      audioFadeOut: 2.0,
     };
+
+    function fadeAudioTo(targetVol, durationSec, onDone) {
+      if (audioFadeRaf) {
+        cancelAnimationFrame(audioFadeRaf);
+        audioFadeRaf = null;
+      }
+      const startVol = bgAudioEl.volume;
+      const clampedTarget = Math.max(0, Math.min(1, targetVol));
+      if (durationSec <= 0.05) {
+        bgAudioEl.volume = clampedTarget;
+        if (onDone) onDone();
+        return;
+      }
+      const startTime = performance.now();
+      const durationMs = durationSec * 1000;
+      const step = (now) => {
+        const t = Math.min(1, (now - startTime) / durationMs);
+        bgAudioEl.volume = Math.max(0, Math.min(1, startVol + (clampedTarget - startVol) * t));
+        if (t < 1) {
+          audioFadeRaf = requestAnimationFrame(step);
+        } else {
+          audioFadeRaf = null;
+          if (onDone) onDone();
+        }
+      };
+      audioFadeRaf = requestAnimationFrame(step);
+    }
 
     function applyVisualSettings() {
       [layerA, layerB].forEach((el) => {
@@ -399,6 +453,46 @@
         el.classList.toggle('collapsed', isExplain && !ok);
       });
       currentIndex = 0;
+      const audioStatusEl = document.getElementById('audio-status');
+      const phaseAudio = mediaData.audio?.[phase]?.[0];
+      if (!mediaData.audio) {
+        audioStatusEl.textContent = '⚠️ Reinicia el servidor (npm start) para activar el soporte de audio';
+        bgAudioEl.classList.add('hidden');
+        audioFadeBtns.classList.add('hidden');
+      } else if (phaseAudio?.url) {
+        bgAudioEl.src = phaseAudio.url;
+        bgAudioEl.classList.remove('hidden');
+        audioFadeBtns.classList.remove('hidden');
+        audioStatusEl.textContent = `🎵 ${phaseAudio.name}`;
+        bgAudioEl.volume = 0;
+        bgAudioEl
+          .play()
+          .then(() => fadeAudioTo(cfg.audioVol, cfg.audioFadeIn))
+          .catch(() => {
+            bgAudioEl.volume = cfg.audioVol;
+            audioStatusEl.textContent = `🔇 Haz clic en la página o en Play para oír ${phaseAudio.name}`;
+            const unlockPlay = () => {
+              if (!bgAudioEl.src || !bgAudioEl.paused) return;
+              bgAudioEl.volume = 0;
+              bgAudioEl
+                .play()
+                .then(() => {
+                  audioStatusEl.textContent = `🎵 ${phaseAudio.name}`;
+                  fadeAudioTo(cfg.audioVol, cfg.audioFadeIn);
+                })
+                .catch(() => {});
+            };
+            document.addEventListener('pointerdown', unlockPlay, { once: true });
+          });
+      } else {
+        audioStatusEl.textContent = `Sin audio en fase ${phase}`;
+        fadeAudioTo(0, cfg.audioFadeOut, () => {
+          bgAudioEl.pause();
+          bgAudioEl.removeAttribute('src');
+          bgAudioEl.classList.add('hidden');
+          audioFadeBtns.classList.add('hidden');
+        });
+      }
       showImageAt(0);
       restartLoop();
     }
@@ -418,6 +512,32 @@
 
     document.getElementById('btn-phase-bg').addEventListener('click', () => setPhase('bg'));
     document.getElementById('btn-phase-explain').addEventListener('click', () => setPhase('explain'));
+
+    document.getElementById('rng-audio-vol').addEventListener('input', (e) => {
+      cfg.audioVol = Number(e.target.value);
+      document.getElementById('val-audio-vol').textContent = cfg.audioVol.toFixed(2);
+      if (!bgAudioEl.paused) bgAudioEl.volume = cfg.audioVol;
+    });
+
+    document.getElementById('rng-audio-fadein').addEventListener('input', (e) => {
+      cfg.audioFadeIn = Number(e.target.value);
+      document.getElementById('val-audio-fadein').textContent = `${cfg.audioFadeIn.toFixed(1)}s`;
+    });
+
+    document.getElementById('rng-audio-fadeout').addEventListener('input', (e) => {
+      cfg.audioFadeOut = Number(e.target.value);
+      document.getElementById('val-audio-fadeout').textContent = `${cfg.audioFadeOut.toFixed(1)}s`;
+    });
+
+    document.getElementById('btn-audio-fadein').addEventListener('click', () => {
+      if (!bgAudioEl.src) return;
+      bgAudioEl.volume = 0;
+      bgAudioEl.play().then(() => fadeAudioTo(cfg.audioVol, cfg.audioFadeIn)).catch(() => {});
+    });
+
+    document.getElementById('btn-audio-fadeout').addEventListener('click', () => {
+      fadeAudioTo(0, cfg.audioFadeOut, () => bgAudioEl.pause());
+    });
 
     document.getElementById('rng-interval').addEventListener('input', (e) => {
       cfg.intervalMs = Number(e.target.value) * 1000;

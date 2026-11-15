@@ -12,6 +12,8 @@ export class QuizonAudio {
     this.unlocked = false;
     this.loopTimer = null;
     this.currentUrlAudio = null;
+    this.mediaFadeRaf = null;
+    this.currentMediaScale = 1;
   }
 
   ensureContext() {
@@ -48,7 +50,7 @@ export class QuizonAudio {
     }
     if (this.currentUrlAudio) {
       this.currentUrlAudio.muted = this.muted;
-      this.currentUrlAudio.volume = this.volume;
+      this.currentUrlAudio.volume = Math.max(0, Math.min(1, this.volume * this.currentMediaScale));
     }
   }
 
@@ -108,24 +110,68 @@ export class QuizonAudio {
     }, 550);
   }
 
-  stopLoop() {
+  #fadeMediaElement(audioEl, targetVol, durationSec, onDone) {
+    if (this.mediaFadeRaf) {
+      cancelAnimationFrame(this.mediaFadeRaf);
+      this.mediaFadeRaf = null;
+    }
+    const startVol = audioEl.volume;
+    const clampedTarget = Math.max(0, Math.min(1, targetVol));
+    if (durationSec <= 0.05) {
+      audioEl.volume = clampedTarget;
+      if (onDone) onDone();
+      return;
+    }
+    const startTime = performance.now();
+    const durationMs = durationSec * 1000;
+    const step = (now) => {
+      if (this.currentUrlAudio !== audioEl && clampedTarget > 0) return;
+      const t = Math.min(1, (now - startTime) / durationMs);
+      audioEl.volume = Math.max(0, Math.min(1, startVol + (clampedTarget - startVol) * t));
+      if (t < 1) {
+        this.mediaFadeRaf = requestAnimationFrame(step);
+      } else {
+        this.mediaFadeRaf = null;
+        if (onDone) onDone();
+      }
+    };
+    this.mediaFadeRaf = requestAnimationFrame(step);
+  }
+
+  stopLoop({ fadeOutSec = 0 } = {}) {
     if (this.loopTimer) {
       clearInterval(this.loopTimer);
       this.loopTimer = null;
     }
+    if (this.currentUrlAudio) {
+      const dyingAudio = this.currentUrlAudio;
+      this.currentUrlAudio = null;
+      if (fadeOutSec > 0.05) {
+        this.#fadeMediaElement(dyingAudio, 0, fadeOutSec, () => dyingAudio.pause());
+      } else {
+        dyingAudio.pause();
+      }
+    }
   }
 
-  playMediaUrl(url) {
+  playMediaUrl(url, { loop = false, targetVolume = null, fadeInSec = 2.0 } = {}) {
     if (!url || !this.unlocked) return;
-    if (this.currentUrlAudio) {
-      this.currentUrlAudio.pause();
-      this.currentUrlAudio = null;
-    }
+    this.stopLoop();
     const audio = new Audio(url);
+    audio.loop = Boolean(loop);
     audio.muted = this.muted;
-    audio.volume = this.volume;
-    audio.play().catch(() => {});
+    this.currentMediaScale = targetVolume !== null ? targetVolume : 1;
+    const finalVol = Math.max(0, Math.min(1, targetVolume !== null ? targetVolume * (this.volume / 0.8) : this.volume));
+    audio.volume = fadeInSec > 0.05 ? 0 : finalVol;
     this.currentUrlAudio = audio;
+    audio
+      .play()
+      .then(() => {
+        if (fadeInSec > 0.05) {
+          this.#fadeMediaElement(audio, finalVol, fadeInSec);
+        }
+      })
+      .catch(() => {});
   }
 }
 

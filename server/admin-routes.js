@@ -255,9 +255,9 @@ export function createAdminRouter(questionStore, imagesDir) {
     }
 
     const { filename, dataUrl } = req.body || {};
-    const match = String(dataUrl || '').match(/^data:image\/([a-zA-Z0-9+.-]+);base64,(.+)$/);
+    const match = String(dataUrl || '').match(/^data:(?:image|audio)\/([a-zA-Z0-9+.-]+);base64,(.+)$/);
     if (!match) {
-      return res.status(400).json({ error: 'Formato de imagen inválido (se espera Data URL base64).' });
+      return res.status(400).json({ error: 'Formato de archivo inválido (se espera imagen o audio en base64).' });
     }
 
     const roleDir = path.join(imagesDir, catalogId, questionId, role);

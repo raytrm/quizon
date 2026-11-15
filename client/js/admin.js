@@ -175,7 +175,9 @@ function renderMediaThumbnails(media) {
   for (const role of ['bg', 'clue', 'explain']) {
     const container = document.getElementById(`thumbs-${role}`);
     const list = media?.[role] || [];
-    container.innerHTML = list
+    const audioList = media?.audio?.[role] || [];
+
+    const imgsHtml = list
       .map(
         (item) => `
         <div class="media-thumb" title="${escapeHtml(item.name)}">
@@ -185,6 +187,20 @@ function renderMediaThumbnails(media) {
       `
       )
       .join('');
+
+    const audiosHtml = audioList
+      .map(
+        (item) => `
+        <div style="grid-column: 1 / -1; display: flex; align-items: center; gap: 0.4rem; background: rgba(9,13,31,0.75); padding: 0.35rem 0.5rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
+          <span style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 110px;" title="${escapeHtml(item.name)}">🔊 ${escapeHtml(item.name)}</span>
+          <audio controls src="${escapeHtml(item.url)}" style="height: 28px; flex: 1; min-width: 120px;"></audio>
+          <button type="button" data-del-role="${role}" data-del-name="${escapeHtml(item.name)}" style="background: rgba(239,68,68,0.9); color: #fff; border: none; border-radius: 6px; padding: 2px 7px; font-size: 0.75rem; cursor: pointer;">✕</button>
+        </div>
+      `
+      )
+      .join('');
+
+    container.innerHTML = imgsHtml + audiosHtml;
 
     container.querySelectorAll('[data-del-name]').forEach((btn) => {
       btn.addEventListener('click', async () => {
@@ -198,7 +214,7 @@ function renderMediaThumbnails(media) {
           if (found) found.question.media = res.media;
           renderMediaThumbnails(res.media);
           renderQuestionsList();
-          showToast('Imagen eliminada.');
+          showToast('Archivo eliminado.');
         } catch (err) {
           showToast(err.message);
         }

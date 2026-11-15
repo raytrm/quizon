@@ -306,32 +306,32 @@
         </div>
       </form>
 
-      <!-- Gestor de Imágenes -->
+      <!-- Gestor de Imágenes y Audios -->
       <section id="adm-media-section" class="hidden" style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle);">
-        <h3>🖼️ Imágenes de la pregunta</h3>
+        <h3>🖼️ Imágenes y Audios de la pregunta</h3>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
           Se guardan automáticamente en <code>data/images/<span id="media-path-label"></span>/</code>
         </p>
 
         <div class="media-role-grid">
           <div class="media-role-card">
-            <strong>🌄 Fondo en bucle (bg)</strong>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Ambientación detrás del texto durante la pregunta.</p>
-            <input type="file" accept="image/*" multiple data-upload-role="bg" style="font-size: 0.8rem; width: 100%;" />
+            <strong>🌄 Fondo (bg)</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imágenes en bucle y/o música de fondo durante la pregunta.</p>
+            <input type="file" accept="image/*,audio/*" multiple data-upload-role="bg" style="font-size: 0.8rem; width: 100%;" />
             <div id="thumbs-bg" class="media-thumbs"></div>
           </div>
 
           <div class="media-role-card">
-            <strong>🔍 Pista visual (clue)</strong>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imagen nítida necesaria para contestar.</p>
-            <input type="file" accept="image/*" multiple data-upload-role="clue" style="font-size: 0.8rem; width: 100%;" />
+            <strong>🔍 Pista (clue)</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imagen nítida o audio necesario para contestar.</p>
+            <input type="file" accept="image/*,audio/*" multiple data-upload-role="clue" style="font-size: 0.8rem; width: 100%;" />
             <div id="thumbs-clue" class="media-thumbs"></div>
           </div>
 
           <div class="media-role-card">
             <strong>💡 Solución (explain)</strong>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imágenes al mostrar la explicación.</p>
-            <input type="file" accept="image/*" multiple data-upload-role="explain" style="font-size: 0.8rem; width: 100%;" />
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">Imágenes o audio al mostrar la explicación.</p>
+            <input type="file" accept="image/*,audio/*" multiple data-upload-role="explain" style="font-size: 0.8rem; width: 100%;" />
             <div id="thumbs-explain" class="media-thumbs"></div>
           </div>
         </div>
