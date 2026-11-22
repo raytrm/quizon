@@ -56,6 +56,10 @@
             {
               "id": "c",
               "text": "Es el término médico utilizado para describir a una persona excesivamente desconfiada y paranoica."
+            },
+            {
+              "id": "d",
+              "text": "Se denomina a las figuras geométricas de más de cien lados."
             }
           ],
           "correctOptionIds": [
@@ -264,7 +268,7 @@
           "options": [
             {
               "id": "a",
-              "text": "Se elaboraba únicamente con agua con gas, azúcar y zumo de limón."
+              "text": "Se elaboraba únicamente con agua con gas, azúcar, ácido fosfórico y zumo de limón."
             },
             {
               "id": "b",
@@ -272,7 +276,11 @@
             },
             {
               "id": "c",
-              "text": "Se fabricaba con extracto de café, vainilla y chocolate, sin ningún ingrediente procedente de plantas."
+              "text": "Se fabricaba con extracto de café, vainilla y chocolate, además de otros ingredientes."
+            },
+            {
+              "id": "d",
+              "text": "Se elaboraba con aceites esenciales, extractos de cítricos y aroma de trufa, además de otros ingredientes."
             }
           ],
           "correctOptionIds": [
@@ -306,11 +314,15 @@
             },
             {
               "id": "c",
+              "text": "Betelchuse."
+            },
+            {
+              "id": "d",
               "text": "Betelgeuse."
             }
           ],
           "correctOptionIds": [
-            "c"
+            "d"
           ],
           "explanation": "Aunque la película se titula Beetlejuice, el nombre original del personaje se escribe Betelgeuse, igual que una de las estrellas más conocidas del firmamento.\n\n¿Por qué se titula Beetlejuice entonces? Porque es una adaptación fonética del nombre de la estrella, mucho más fácil de leer y pronunciar para el público. De hecho, dentro de la propia película aparecen referencias en las que el nombre del fantasma está escrito como Betelgeuse.",
           "extraFact": "Betelgeuse es una supergigante roja en la constelación de Orión tan enorme que, si ocupase el lugar del Sol, su superficie llegaría aproximadamente hasta la órbita de Júpiter. Además, es candidata conocida a convertirse en supernova."
@@ -334,6 +346,10 @@
             {
               "id": "c",
               "text": "Nunca llegan a regresar a casa porque la serie fue cancelada antes de que se produjera su capítulo final."
+            },
+            {
+              "id": "d",
+              "text": "No llegan a superar la última prueba consiguiendo Venger que no huyan de su mundo."
             }
           ],
           "correctOptionIds": [
@@ -352,7 +368,7 @@
           "options": [
             {
               "id": "a",
-              "text": "Mattel iba a fabricar juguetes de Conan el Bárbaro, pero al ver lo violenta que era la película canceló el proyecto y convirtió al protagonista en un héroe rubio llamado He-Man."
+              "text": "Mattel iba a fabricar juguetes de Conan el Bárbaro, pero al ver lo violenta que era la película cambio el proyecto y lo convirtió en un héroe rubio llamado He-Man."
             },
             {
               "id": "b",
@@ -361,12 +377,16 @@
             {
               "id": "c",
               "text": "Battle Cat, el tigre de He-Man, reutilizó el molde de un tigre de la antigua línea Big Jim, pintado de verde con rayas amarillas, silla de montar y casco."
+            },
+            {
+              "id": "d",
+              "text": "Cuando le presentaron los muñecos a la cadena de tiendas Toys \"R\" Us, los compradores preguntaron: «¿Dónde está la película o la serie que respalda estos juguetes?». Mattel mintió y dijo que ya tenían cómics; a las carreras, metieron un mini-comic dentro del blíster de cada figura."
             }
           ],
           "correctOptionIds": [
             "a"
           ],
-          "explanation": "Es cierto que Mattel consiguió los derechos de Conan el Bárbaro en 1981 e incluso hizo prototipos, pero decidió romper el acuerdo en 1982 por la violencia de la película. Sin embargo, el truco es que He-Man ya estaba en desarrollo independiente gracias al diseñador Roger Sweet (inspirado en Frank Frazetta): no fue simplemente un Conan con peluca rubia.\n\nLas otras dos historias son reales: Mattel rechazó Star Wars en 1976 por los 750.000 dólares iniciales de licencia (que aprovechó Kenner), y Battle Cat reutilizó el molde del tigre de Big Jim on the Tiger Trail (1976).",
+          "explanation": "Es cierto que Mattel consiguió los derechos de Conan el Bárbaro en 1981 e incluso hizo prototipos, pero decidió romper el acuerdo en 1982 por la violencia de la película. Sin embargo, el truco es que He-Man ya estaba en desarrollo independiente gracias al diseñador Roger Sweet (inspirado en Frank Frazetta): no fue simplemente un Conan con peluca rubia.\n\nLas otras tres historias son reales: Mattel rechazó Star Wars en 1976 por los 750.000 dólares iniciales de licencia (que aprovechó Kenner), y Battle Cat reutilizó el molde del tigre de Big Jim on the Tiger Trail (1976).",
           "extraFact": "Cuando Battle Cat no está transformado se llama Cringer, un tigre bastante cobardica que gracias a los poderes de He-Man se convierte en su temible montura de combate."
         },
         {
@@ -387,7 +407,11 @@
             },
             {
               "id": "c",
-              "text": "Pitufina fue un experimento fallido cuando el gato Azrael tiró accidentalmente pétalos de flores a la olla mientras Gargamel cocinaba un pitufo."
+              "text": "Pitufina fue un experimento fallido cuando el gato Azrael tiró accidentalmente pétalos de flores a la olla mientras Gargamel creaba un pitufo."
+            },
+            {
+              "id": "d",
+              "text": "Cuando se convirtio en rubia, todos los pitufos se enamoraron de ella y comenzaron a pelearse por su atención, cumpliendo por fin el objetivo inicial de Gargamel."
             }
           ],
           "correctOptionIds": [
@@ -410,11 +434,15 @@
             },
             {
               "id": "b",
-              "text": "Porque una animadora propuso ese color y Groening vio una oportunidad visual: al hacer zapping, un destello amarillo permitiría reconocer la serie al instante."
+              "text": "Porque una animadora propuso ese color y Groening vio una oportunidad visual, al hacer zapping, un destello amarillo permitiría reconocerlos."
             },
             {
               "id": "c",
-              "text": "Porque Matt Groening quería representar a una familia de extraterrestres infiltrada en la sociedad estadounidense."
+              "text": "Porque Matt Groening inicialmente quería representar a un pueblo de extraterrestres infiltrados en la sociedad estadounidense."
+            },
+            {
+              "id": "d",
+              "text": "Porque tenían excedente de color amarillo por ser el color menos utilizado en animación."
             }
           ],
           "correctOptionIds": [
@@ -429,7 +457,7 @@
           "category": "Animación",
           "difficulty": "medium",
           "timeLimit": 25,
-          "prompt": "Bob Esponja vive en una piña debajo del mar y tiene como mejor amigo a Patricio. ¿Cuál de estas afirmaciones sobre su creación es FALSA?",
+          "prompt": "Bob Esponja vive en una piña debajo del mar y tiene como mejor amigo a Patricio. ¿Cuál de estas afirmaciones es FALSA?",
           "options": [
             {
               "id": "a",
@@ -442,6 +470,10 @@
             {
               "id": "c",
               "text": "Bob Esponja y Patricio fueron concebidos oficialmente como una pareja sentimental por su creador."
+            },
+            {
+              "id": "d",
+              "text": "\"Su cuerpo absorbe y sin estallar\" y \"El mejor amigo que podrías desear\" son versos de la canción."
             }
           ],
           "correctOptionIds": [
@@ -464,11 +496,15 @@
             },
             {
               "id": "b",
-              "text": "Fue una improvisación del actor de doblaje original, Alan Reed, para sustituir una expresión más sosa del guion."
+              "text": "Fue una improvisación del actor de doblaje original, para sustituir la expresión «¡Yahoo!»."
             },
             {
               "id": "c",
               "text": "Era una expresión que Alan Reed escuchaba decir a su madre y la incorporó como homenaje."
+            },
+            {
+              "id": "d",
+              "text": "«Yabba-Dabba-Doo!» es una expresión aborigen que significa \"¡Vamos todos a comer!\"."
             }
           ],
           "correctOptionIds": [
@@ -491,10 +527,14 @@
             },
             {
               "id": "b",
-              "text": "Antes de Mike Myers, el actor Chris Farley fue contratado para dar voz a Shrek y llegó a grabar gran parte de sus diálogos."
+              "text": "En España Shrek es doblado por el humorista y actor Juan Muñoz."
             },
             {
               "id": "c",
+              "text": "En DreamWorks, trabajar en Shrek se consideraba un castigo, los animadores que cometían errores en películas como El príncipe de Egipto eran enviados a trabajar en la película del ogro."
+            },
+            {
+              "id": "d",
               "text": "Shrek está oficialmente basado en Maurice Tillet, un luchador francés con acromegalia, y DreamWorks confirmó que usó sus fotos como modelo."
             }
           ],
@@ -523,6 +563,10 @@
             {
               "id": "c",
               "text": "Utilizando la voz distorsionada del propio George Lucas."
+            },
+            {
+              "id": "d",
+              "text": "Arrastrando distintos tipos de elementos (como sillas y mesas) en un suelo liso."
             }
           ],
           "correctOptionIds": [
@@ -541,19 +585,23 @@
           "options": [
             {
               "id": "a",
-              "text": "Porque el tiburón mecánico era tan realista que Spielberg decidió reservarlo para el final."
+              "text": "Porque los tiburones mecánicos sufrían constantes averías y no funcionaban correctamente."
             },
             {
               "id": "b",
-              "text": "Porque los tiburones mecánicos sufrían constantes averías y no funcionaban correctamente."
+              "text": "Porque no estubo el tiburón fabricado hasta el final del rodaje debido a su complejidad y realismo."
             },
             {
               "id": "c",
               "text": "Porque la productora prohibió mostrarlo para evitar que la película resultase demasiado violenta."
+            },
+            {
+              "id": "d",
+              "text": "Porque el tiburón mecánico era tan realista que Spielberg decidió reservarlo para el final."
             }
           ],
           "correctOptionIds": [
-            "b"
+            "a"
           ],
           "explanation": "El tiburón mecánico, apodado Bruce, dio muchísimos problemas durante el rodaje porque el agua salada estropeaba sus mecanismos continuamente. Steven Spielberg tuvo que sugerir su presencia en lugar de mostrarlo, haciendo que el espectador imaginara una amenaza mucho más aterradora.",
           "extraFact": "Lo que parecía un desastre técnico terminó convirtiéndose en una de las mayores lecciones de suspense de la historia del cine."

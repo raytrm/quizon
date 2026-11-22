@@ -30,6 +30,7 @@ const elExtraFact = document.getElementById('f-extra-fact');
 const elDeleteQBtn = document.getElementById('btn-delete-question');
 const elMediaSection = document.getElementById('adm-media-section');
 const elMediaPathLabel = document.getElementById('media-path-label');
+const elTestQuestionBtn = document.getElementById('btn-test-question');
 
 async function apiJson(url, options = {}) {
   const res = await fetch(url, {
@@ -245,6 +246,10 @@ function selectQuestion(qId) {
 
   elMediaSection.classList.remove('hidden');
   elMediaPathLabel.textContent = `${catalog.catalogId}/${question.id}`;
+  if (elTestQuestionBtn) {
+    elTestQuestionBtn.href = `/test-bg?catalog=${encodeURIComponent(catalog.catalogId)}&q=${encodeURIComponent(question.id)}&mode=preview`;
+    elTestQuestionBtn.classList.remove('hidden');
+  }
   renderMediaThumbnails(question.media || { bg: [], clue: [], explain: [] });
   renderQuestionsList();
   requestAnimationFrame(resizeAllFormTextareas);
@@ -275,6 +280,9 @@ function startNewQuestion() {
   );
   elDeleteQBtn.classList.add('hidden');
   elMediaSection.classList.add('hidden');
+  if (elTestQuestionBtn) {
+    elTestQuestionBtn.classList.add('hidden');
+  }
   renderQuestionsList();
   requestAnimationFrame(resizeAllFormTextareas);
 }
